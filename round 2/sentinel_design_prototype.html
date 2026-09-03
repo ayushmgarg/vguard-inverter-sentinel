@@ -1,0 +1,1042 @@
+<title>V-Guard Sentinel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#EEF1F6;
+  --bg-2:#E4E9F1;
+  --card:#FFFFFF;
+  --card-2:#F7F9FC;
+  --ink:#111A2E;
+  --ink-soft:#33405A;
+  --muted:#5C6A85;
+  --faint:#8A96AC;
+  --line:#E1E7F0;
+  --line-2:#EDF1F7;
+
+  --brand:#3B4FE0;
+  --brand-2:#5A6BF0;
+  --brand-ink:#2233A8;
+  --brand-wash:#EBEEFF;
+
+  --good:#12A574;
+  --good-wash:#E1F6EE;
+  --warn:#E0990E;
+  --warn-wash:#FBF0D9;
+  --crit:#E5484D;
+  --crit-wash:#FCE7E7;
+
+  --shadow-sm:0 1px 2px rgba(17,26,46,.06), 0 1px 3px rgba(17,26,46,.04);
+  --shadow-md:0 4px 16px rgba(17,26,46,.08), 0 2px 4px rgba(17,26,46,.04);
+  --shadow-lg:0 18px 50px rgba(17,26,46,.16), 0 6px 16px rgba(17,26,46,.08);
+  --shadow-phone:0 40px 80px -20px rgba(17,26,46,.42), 0 12px 30px rgba(17,26,46,.18);
+
+  --r-sm:9px; --r-md:14px; --r-lg:20px; --r-xl:28px;
+  --maxw:1240px;
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme:dark){
+    --bg:#0A0F1C;
+    --bg-2:#0E1424;
+    --card:#141C2E;
+    --card-2:#1A2338;
+    --ink:#EAF0FB;
+    --ink-soft:#C4CEE0;
+    --muted:#93A0B8;
+    --faint:#65728C;
+    --line:#26314A;
+    --line-2:#1E2740;
+
+    --brand:#6E7DF5;
+    --brand-2:#8B97F8;
+    --brand-ink:#AEB8FB;
+    --brand-wash:#1E2647;
+
+    --good:#2ED39A;
+    --good-wash:#123528;
+    --warn:#F2B23C;
+    --warn-wash:#3A2E10;
+    --crit:#FF6166;
+    --crit-wash:#3A1B1D;
+
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+    --shadow-md:0 6px 20px rgba(0,0,0,.45);
+    --shadow-lg:0 24px 60px rgba(0,0,0,.6);
+    --shadow-phone:0 44px 90px -24px rgba(0,0,0,.8), 0 14px 34px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0A0F1C;
+  --bg-2:#0E1424;
+  --card:#141C2E;
+  --card-2:#1A2338;
+  --ink:#EAF0FB;
+  --ink-soft:#C4CEE0;
+  --muted:#93A0B8;
+  --faint:#65728C;
+  --line:#26314A;
+  --line-2:#1E2740;
+
+  --brand:#6E7DF5;
+  --brand-2:#8B97F8;
+  --brand-ink:#AEB8FB;
+  --brand-wash:#1E2647;
+
+  --good:#2ED39A;
+  --good-wash:#123528;
+  --warn:#F2B23C;
+  --warn-wash:#3A2E10;
+  --crit:#FF6166;
+  --crit-wash:#3A1B1D;
+
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow-md:0 6px 20px rgba(0,0,0,.45);
+  --shadow-lg:0 24px 60px rgba(0,0,0,.6);
+  --shadow-phone:0 44px 90px -24px rgba(0,0,0,.8), 0 14px 34px rgba(0,0,0,.5);
+}
+
+/* ============ BASE ============ */
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  font-family:"Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.mono{font-family:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;font-variant-numeric:tabular-nums}
+h1,h2,h3,h4{margin:0;line-height:1.12;text-wrap:balance;font-weight:800;letter-spacing:-.02em}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:2.5px solid var(--brand);outline-offset:2px;border-radius:4px}
+.eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+/* ============ TOP BAR ============ */
+.topbar{
+  position:sticky;top:0;z-index:60;
+  background:color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter:saturate(1.4) blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  max-width:var(--maxw);margin:0 auto;padding:14px 24px;
+  display:flex;align-items:center;gap:20px;
+}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.02em;font-size:1.06rem}
+.brand-mark{
+  width:34px;height:34px;border-radius:10px;flex:0 0 auto;
+  background:linear-gradient(150deg,var(--brand),var(--brand-2));
+  display:grid;place-items:center;box-shadow:0 4px 12px -2px color-mix(in srgb,var(--brand) 55%, transparent);
+}
+.brand small{display:block;font-size:.66rem;font-weight:600;letter-spacing:.02em;color:var(--muted);line-height:1}
+.brand .bn{line-height:1.05}
+.topbar-spacer{flex:1}
+
+/* Segmented surface switch */
+.seg{
+  display:inline-flex;background:var(--bg-2);border:1px solid var(--line);
+  padding:4px;border-radius:12px;gap:2px;
+}
+.seg button{
+  padding:8px 15px;border-radius:9px;font-weight:600;font-size:.86rem;color:var(--muted);
+  display:flex;align-items:center;gap:7px;transition:color .18s, background .18s, box-shadow .18s;
+  white-space:nowrap;
+}
+.seg button .ic{width:16px;height:16px}
+.seg button[aria-selected="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow-sm)}
+.icon-btn{
+  width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  border:1px solid var(--line);background:var(--card);color:var(--ink-soft);transition:.18s;
+}
+.icon-btn:hover{color:var(--ink);border-color:var(--faint)}
+
+/* ============ SHELL / HERO ============ */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.hero{padding:44px 0 20px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:24px 40px}
+.hero-l{flex:1 1 460px;min-width:min(100%,460px)}
+.pill-live{
+  display:inline-flex;align-items:center;gap:8px;font-size:.76rem;font-weight:600;
+  color:var(--brand-ink);background:var(--brand-wash);padding:5px 12px;border-radius:999px;margin-bottom:16px;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 0 color-mix(in srgb,var(--good) 60%,transparent);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--good) 55%,transparent)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.hero h1{font-size:clamp(2rem,4.4vw,3.15rem);letter-spacing:-.035em}
+.hero h1 .grad{background:linear-gradient(120deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lede{margin-top:14px;font-size:1.06rem;color:var(--ink-soft);max-width:60ch;line-height:1.55}
+.hero-stats{display:flex;gap:26px;flex-wrap:wrap;margin-top:22px}
+.hstat .n{font-size:1.5rem;font-weight:800;letter-spacing:-.02em}
+.hstat .l{font-size:.78rem;color:var(--muted);font-weight:500}
+.hstat .n .u{font-size:.9rem;color:var(--muted);font-weight:600}
+
+/* ============ SURFACE PANES ============ */
+.pane{display:none}
+.pane.active{display:block;animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.section-pad{padding:24px 0 80px}
+
+/* ============ PHONE ============ */
+.app-stage{
+  display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:40px;align-items:start;
+  padding-top:10px;
+}
+@media(max-width:900px){.app-stage{grid-template-columns:1fr}}
+.phone-col{display:flex;justify-content:center}
+.phone{
+  width:344px;max-width:100%;height:720px;border-radius:46px;
+  background:linear-gradient(160deg,#1c2438,#0f1526);
+  padding:13px;box-shadow:var(--shadow-phone);position:relative;flex:0 0 auto;
+}
+:root[data-theme="dark"] .phone,:root:not([data-theme="light"]) .phone{background:linear-gradient(160deg,#2a3450,#12192b)}
+.phone-screen{
+  width:100%;height:100%;border-radius:34px;overflow:hidden;background:var(--card);
+  position:relative;display:flex;flex-direction:column;
+}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:118px;height:26px;background:#0f1526;border-radius:0 0 16px 16px;z-index:20}
+.phone-status{
+  display:flex;justify-content:space-between;align-items:center;padding:11px 22px 5px;
+  font-size:.74rem;font-weight:700;color:var(--ink);flex:0 0 auto;
+}
+.phone-status .r{display:flex;gap:6px;align-items:center}
+.app-body{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.app-body::-webkit-scrollbar{display:none}
+.screen{display:none;padding:6px 16px 20px}
+.screen.on{display:block;animation:fade .3s ease}
+
+/* app header */
+.app-head{display:flex;align-items:center;justify-content:space-between;padding:6px 2px 14px}
+.app-head .h{font-size:1.28rem;font-weight:800;letter-spacing:-.03em}
+.app-head .sub{font-size:.76rem;color:var(--muted);font-weight:500}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--brand-wash);color:var(--brand-ink);display:grid;place-items:center;font-weight:700;font-size:.82rem}
+
+/* generic app card */
+.acard{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px;box-shadow:var(--shadow-sm);margin-bottom:12px}
+.acard.tint-good{background:var(--good-wash);border-color:color-mix(in srgb,var(--good) 26%,transparent)}
+.acard.tint-warn{background:var(--warn-wash);border-color:color-mix(in srgb,var(--warn) 32%,transparent)}
+.acard.tint-crit{background:var(--crit-wash);border-color:color-mix(in srgb,var(--crit) 32%,transparent)}
+.acard.tint-brand{background:var(--brand-wash);border-color:color-mix(in srgb,var(--brand) 26%,transparent)}
+
+/* health hero */
+.gauge-wrap{display:flex;flex-direction:column;align-items:center;padding:8px 0 4px}
+.gauge{position:relative;width:210px;height:210px}
+.gauge .val{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.gauge .val .big{font-size:2.9rem;font-weight:600;letter-spacing:-.03em;line-height:1}
+.gauge .val .pct{font-size:1rem;color:var(--muted);font-weight:600;margin-top:-2px}
+.gauge .val .lbl{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:4px}
+.status-chip{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:700;padding:5px 12px;border-radius:999px}
+.status-chip.good{background:var(--good-wash);color:var(--good)}
+.status-chip.warn{background:var(--warn-wash);color:var(--warn)}
+.status-chip.crit{background:var(--crit-wash);color:var(--crit)}
+.status-chip .ic{width:14px;height:14px}
+
+.metric-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.metric{background:var(--card-2);border:1px solid var(--line-2);border-radius:var(--r-md);padding:11px 13px}
+.metric .k{font-size:.7rem;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:5px}
+.metric .v{font-size:1.18rem;font-weight:600;margin-top:3px;letter-spacing:-.01em}
+.metric .v small{font-size:.72rem;color:var(--muted);font-weight:600}
+.metric .trend{font-size:.68rem;font-weight:600;margin-top:2px;display:flex;align-items:center;gap:3px}
+.trend.up{color:var(--crit)} .trend.down{color:var(--good)} .trend.flat{color:var(--muted)}
+
+.card-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.card-title h4{font-size:.92rem;font-weight:700;letter-spacing:-.01em}
+.card-title .link{font-size:.76rem;color:var(--brand);font-weight:600}
+.mini-ic{width:16px;height:16px;color:var(--muted)}
+
+/* rul timeline */
+.rul-head{display:flex;align-items:baseline;gap:8px}
+.rul-head .num{font-size:2.4rem;font-weight:600;letter-spacing:-.03em;line-height:1;color:var(--warn)}
+.rul-head .unit{font-size:.9rem;color:var(--muted);font-weight:600}
+.rul-bar{height:9px;border-radius:6px;background:var(--line);margin:14px 0 8px;overflow:hidden;position:relative;display:flex}
+.rul-bar span{height:100%}
+.rul-seg-good{background:var(--good)} .rul-seg-warn{background:var(--warn)} .rul-seg-crit{background:var(--crit);opacity:.35}
+.rul-ticks{display:flex;justify-content:space-between;font-size:.64rem;color:var(--faint);font-weight:600}
+.band-note{font-size:.74rem;color:var(--muted);margin-top:10px;display:flex;gap:7px;align-items:flex-start;line-height:1.4}
+
+/* load tiers (blackout) */
+.blk-banner{
+  border-radius:var(--r-lg);padding:15px 16px;margin-bottom:14px;color:#fff;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#1c2740,#111a2e);
+}
+.blk-banner.live{background:linear-gradient(135deg,#3b2130,#7a2530)}
+.blk-banner .st{display:flex;align-items:center;gap:8px;font-weight:700;font-size:.82rem;letter-spacing:.02em}
+.blk-banner .big{font-size:1.9rem;font-weight:600;letter-spacing:-.02em;margin-top:8px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.blk-banner .big .mono{white-space:nowrap}
+.blk-banner .big .u{font-size:.86rem;opacity:.75;font-weight:600;flex-basis:100%}
+.blk-banner .sub{font-size:.76rem;opacity:.8;margin-top:2px}
+.blk-toggle{
+  position:absolute;top:14px;right:14px;font-size:.72rem;font-weight:700;background:rgba(255,255,255,.16);
+  color:#fff;padding:6px 11px;border-radius:999px;backdrop-filter:blur(4px);transition:.18s;
+}
+.blk-toggle:hover{background:rgba(255,255,255,.28)}
+
+.tier{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:var(--r-md);border:1px solid var(--line);margin-bottom:9px;background:var(--card);position:relative;transition:.3s}
+.tier .stripe{position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:4px 0 0 4px}
+.tier.keep .stripe{background:var(--good)} .tier.defer .stripe{background:var(--warn)} .tier.shed .stripe{background:var(--crit)}
+.tier .licon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto}
+.tier.keep .licon{background:var(--good-wash);color:var(--good)}
+.tier.defer .licon{background:var(--warn-wash);color:var(--warn)}
+.tier.shed .licon{background:var(--crit-wash);color:var(--crit)}
+.tier .lmid{flex:1;min-width:0}
+.tier .lname{font-weight:700;font-size:.86rem}
+.tier .lmeta{font-size:.7rem;color:var(--muted);font-weight:500}
+.tier .lstate{font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+.tier.keep .lstate{background:var(--good-wash);color:var(--good)}
+.tier.defer .lstate{background:var(--warn-wash);color:var(--warn)}
+.tier.shed .lstate{background:var(--crit-wash);color:var(--crit)}
+.tier.is-shed{opacity:.5}
+.tier.is-shed .lname{text-decoration:line-through;text-decoration-color:var(--faint)}
+
+/* energy coach bars */
+.nilm-bar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.nilm-ic{width:32px;height:32px;border-radius:9px;background:var(--card-2);border:1px solid var(--line-2);display:grid;place-items:center;color:var(--ink-soft);flex:0 0 auto}
+.nilm-mid{flex:1;min-width:0}
+.nilm-top{display:flex;justify-content:space-between;font-size:.8rem;font-weight:600;margin-bottom:5px}
+.nilm-top .kwh{color:var(--muted);font-weight:600}
+.nilm-track{height:8px;border-radius:5px;background:var(--line);overflow:hidden}
+.nilm-fill{height:100%;border-radius:5px;background:var(--brand)}
+.donut-legend{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin-top:12px}
+.leg{display:flex;align-items:center;gap:7px;font-size:.76rem;font-weight:500}
+.leg .sw{width:10px;height:10px;border-radius:3px;flex:0 0 auto}
+.leg .lg-v{margin-left:auto;color:var(--muted);font-weight:600}
+
+/* reorder / battery */
+.spec-line{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line-2);font-size:.82rem}
+.spec-line:last-child{border-bottom:none}
+.spec-line .k{color:var(--muted);font-weight:500}
+.spec-line .v{font-weight:600}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border-radius:12px;font-weight:700;font-size:.9rem;transition:.18s;width:100%}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 6px 16px -4px color-mix(in srgb,var(--brand) 60%,transparent)}
+.btn-primary:hover{background:var(--brand-ink)}
+.btn-ghost{background:var(--card-2);color:var(--ink);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--faint)}
+.warranty-log{font-size:.74rem}
+.log-row{display:flex;gap:9px;align-items:flex-start;padding:8px 0}
+.log-dot{width:8px;height:8px;border-radius:50%;margin-top:6px;flex:0 0 auto;background:var(--brand)}
+.log-row .lt{font-weight:600;font-size:.8rem}
+.log-row .ld{color:var(--muted);font-size:.72rem}
+.log-hash{margin-left:auto;font-size:.66rem;color:var(--faint)}
+
+/* bottom nav */
+.tabbar{
+  flex:0 0 auto;display:flex;justify-content:space-around;align-items:center;
+  padding:9px 8px 14px;border-top:1px solid var(--line);background:var(--card);
+}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--faint);font-size:.62rem;font-weight:600;padding:4px 10px;border-radius:10px;transition:.15s}
+.tab .ti{width:22px;height:22px}
+.tab[aria-selected="true"]{color:var(--brand)}
+
+/* side notes column (app) */
+.notes h3{font-size:1.3rem;letter-spacing:-.03em}
+.note{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:14px 15px;margin-bottom:11px;box-shadow:var(--shadow-sm);
+}
+.note .nh{display:flex;align-items:center;gap:9px;font-weight:700;font-size:.9rem;margin-bottom:5px}
+.note .nh .ni{width:30px;height:30px;border-radius:9px;background:var(--brand-wash);color:var(--brand);display:grid;place-items:center;flex:0 0 auto}
+.note p{font-size:.82rem;color:var(--muted);line-height:1.5}
+.offline-flag{
+  display:inline-flex;gap:7px;align-items:center;font-size:.74rem;font-weight:600;color:var(--good);
+  background:var(--good-wash);border:1px solid color-mix(in srgb,var(--good) 24%,transparent);
+  padding:8px 12px;border-radius:10px;margin-top:4px;
+}
+
+/* ============ DASHBOARD ============ */
+.dash{display:grid;grid-template-columns:210px minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:var(--r-xl);overflow:hidden;background:var(--card);box-shadow:var(--shadow-md);margin-top:8px}
+@media(max-width:820px){.dash{grid-template-columns:1fr}}
+.dside{background:var(--card-2);border-right:1px solid var(--line);padding:18px 14px;display:flex;flex-direction:column;gap:4px}
+@media(max-width:820px){.dside{flex-direction:row;overflow-x:auto;border-right:none;border-bottom:1px solid var(--line)}}
+.dside .grp{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700;padding:12px 10px 5px}
+.dnav{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:10px;font-size:.86rem;font-weight:600;color:var(--muted);white-space:nowrap;transition:.15s}
+.dnav .di{width:17px;height:17px}
+.dnav[aria-selected="true"]{background:var(--brand-wash);color:var(--brand-ink)}
+.dnav:hover:not([aria-selected="true"]){color:var(--ink);background:var(--line-2)}
+.dmain{padding:24px;min-width:0}
+.dhead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.dhead h2{font-size:1.5rem;letter-spacing:-.03em}
+.dhead .sub{color:var(--muted);font-size:.88rem;margin-top:3px}
+.dsearch{display:flex;align-items:center;gap:8px;background:var(--card-2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.84rem;color:var(--muted);min-width:210px}
+
+/* kpi row */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+@media(max-width:760px){.kpis{grid-template-columns:1fr 1fr}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px 17px;position:relative;overflow:hidden}
+.kpi .kt{font-size:.76rem;color:var(--muted);font-weight:600;display:flex;align-items:center;gap:6px}
+.kpi .kv{font-size:1.85rem;font-weight:600;letter-spacing:-.03em;margin-top:6px;line-height:1}
+.kpi .kv .u{font-size:.86rem;color:var(--muted);font-weight:600}
+.kpi .kd{font-size:.72rem;font-weight:600;margin-top:7px;display:flex;align-items:center;gap:4px}
+.kpi .spark{position:absolute;right:12px;bottom:10px;opacity:.9}
+
+.grid-2{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:16px}
+@media(max-width:980px){.grid-2{grid-template-columns:1fr}}
+.dcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;margin-bottom:16px}
+.dcard-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px}
+.dcard-h h3{font-size:1.02rem;font-weight:700;letter-spacing:-.02em}
+.dcard-h .hint{font-size:.74rem;color:var(--muted)}
+
+/* fleet table */
+.ftable{width:100%;border-collapse:collapse;font-size:.84rem}
+.ftable th{text-align:left;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:700;padding:0 12px 10px;border-bottom:1px solid var(--line)}
+.ftable td{padding:12px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+.ftable tr:last-child td{border-bottom:none}
+.ftable tr.rowbtn{cursor:pointer;transition:background .14s}
+.ftable tr.rowbtn:hover{background:var(--card-2)}
+.ftable tr.sel{background:var(--brand-wash)}
+.unit-id{font-weight:700;display:flex;flex-direction:column}
+.unit-id small{font-weight:500;color:var(--muted);font-size:.72rem}
+.hbadge{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:999px}
+.hbadge.good{background:var(--good-wash);color:var(--good)}
+.hbadge.warn{background:var(--warn-wash);color:var(--warn)}
+.hbadge.crit{background:var(--crit-wash);color:var(--crit)}
+.hbadge .hd{width:6px;height:6px;border-radius:50%;background:currentColor}
+.soh-cell{display:flex;align-items:center;gap:9px}
+.soh-mini{width:52px;height:6px;border-radius:4px;background:var(--line);overflow:hidden;flex:0 0 auto}
+.soh-mini i{display:block;height:100%;border-radius:4px}
+
+/* telemetry / unit detail */
+.telem{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.telem .t{background:var(--card-2);border:1px solid var(--line-2);border-radius:var(--r-md);padding:11px 13px}
+.telem .t .k{font-size:.68rem;color:var(--muted);font-weight:600}
+.telem .t .v{font-size:1.15rem;font-weight:600;margin-top:2px}
+.telem .t .v small{font-size:.7rem;color:var(--muted)}
+
+/* federated panel */
+.fed-node{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--line-2);font-size:.82rem}
+.fed-node:last-child{border-bottom:none}
+.fed-node .fi{width:30px;height:30px;border-radius:9px;background:var(--brand-wash);color:var(--brand);display:grid;place-items:center;flex:0 0 auto}
+.fed-node .fm{flex:1}
+.fed-node .fn{font-weight:600}
+.fed-node .fs{font-size:.72rem;color:var(--muted)}
+.fed-node .fstat{font-size:.7rem;font-weight:700;color:var(--good)}
+.privacy-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.pbadge{font-size:.7rem;font-weight:600;padding:6px 10px;border-radius:8px;background:var(--card-2);border:1px solid var(--line);color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+
+/* event log */
+.elog{font-size:.82rem}
+.erow{display:grid;grid-template-columns:auto 1fr auto;gap:11px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line-2)}
+.erow:last-child{border-bottom:none}
+.esev{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.esev.warn{background:var(--warn)} .esev.crit{background:var(--crit)} .esev.info{background:var(--brand)}
+.erow .em{font-weight:600}
+.erow .ed{font-size:.72rem;color:var(--muted)}
+.erow .et{font-size:.72rem;color:var(--faint);white-space:nowrap}
+.etag{font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:5px;background:var(--card-2);border:1px solid var(--line);color:var(--muted)}
+
+/* engines strip */
+.engines{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:6px 0 4px}
+@media(max-width:820px){.engines{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.engines{grid-template-columns:1fr}}
+.engine{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;box-shadow:var(--shadow-sm);position:relative}
+.engine .en{position:absolute;top:14px;right:16px;font-size:.7rem;font-weight:700;color:var(--faint);font-family:"IBM Plex Mono",monospace}
+.engine .ei{width:40px;height:40px;border-radius:12px;background:var(--brand-wash);color:var(--brand);display:grid;place-items:center;margin-bottom:12px}
+.engine h4{font-size:.98rem;font-weight:700;letter-spacing:-.01em}
+.engine p{font-size:.8rem;color:var(--muted);margin-top:6px;line-height:1.5}
+
+.footer{border-top:1px solid var(--line);padding:26px 0 46px;color:var(--muted);font-size:.8rem;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center}
+.footer .disc{max-width:70ch;line-height:1.5}
+.credit{font-weight:600;color:var(--ink-soft)}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4.5"/></svg>
+      </span>
+      <span class="bn">V-Guard Sentinel<small>Intelligence layer for the inverter</small></span>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="seg" role="tablist" aria-label="Choose surface">
+      <button role="tab" aria-selected="true" id="tab-app" onclick="showSurface('app')">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.4"/><path d="M11 18h2"/></svg>
+        Homeowner app
+      </button>
+      <button role="tab" aria-selected="false" id="tab-dash" onclick="showSurface('dash')">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8"/></svg>
+        Fleet dashboard
+      </button>
+    </div>
+    <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme">
+      <svg id="themeIc" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="hero-l">
+      <span class="pill-live"><span class="dot"></span> Running on-device &middot; no internet required</span>
+      <h1>Your inverter can now <span class="grad">see its own failure coming.</span></h1>
+      <p class="lede">Sentinel embeds a low-cost AI Core inside the inverter. It predicts the battery's ageing weeks ahead, protects your essentials through a blackout on its own, and gets sharper as V-Guard's fleet grows &mdash; all offline.</p>
+      <div class="hero-stats">
+        <div class="hstat"><div class="n">4<span class="u"> engines</span></div><div class="l">on one AI Core</div></div>
+        <div class="hstat"><div class="n">&#8377;150&ndash;800</div><div class="l">added cost per unit</div></div>
+        <div class="hstat"><div class="n">&lt;10<span class="u"> ms</span></div><div class="l">on-device inference</div></div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<!-- ============ APP SURFACE ============ -->
+<main class="wrap pane active" id="pane-app" role="tabpanel" aria-labelledby="tab-app">
+  <div class="section-pad">
+    <div class="app-stage">
+      <div class="phone-col">
+        <div class="phone">
+          <div class="phone-screen">
+            <div class="notch" aria-hidden="true"></div>
+            <div class="phone-status mono">
+              <span>9:41</span>
+              <span class="r">
+                <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="1"/><rect x="4" y="5" width="3" height="6" rx="1"/><rect x="8" y="3" width="3" height="8" rx="1"/><rect x="12" y="0" width="3" height="11" rx="1"/></svg>
+                <svg width="15" height="11" viewBox="0 0 15 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 4C3 2 5 1 7.5 1S12 2 14 4M3.4 6.4C4.6 5.3 6 4.7 7.5 4.7s2.9.6 4.1 1.7M6 8.8c.9-.7 2.1-.7 3 0"/></svg>
+                <svg width="24" height="12" viewBox="0 0 24 12" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="1" y="1" width="20" height="10" rx="2.6"/><rect x="2.6" y="2.6" width="13" height="6.8" rx="1.2" fill="currentColor"/><rect x="22" y="4" width="1.6" height="4" rx=".8" fill="currentColor"/></svg>
+              </span>
+            </div>
+            <div class="app-body" id="appBody">
+
+              <!-- HOME -->
+              <section class="screen on" id="s-home">
+                <div class="app-head">
+                  <div><div class="h">Good evening</div><div class="sub">Sentinel is watching your backup</div></div>
+                  <div class="avatar">TC</div>
+                </div>
+
+                <div class="acard">
+                  <div class="gauge-wrap">
+                    <div class="gauge" id="sohGauge">
+                      <svg width="210" height="210" viewBox="0 0 210 210">
+                        <circle cx="105" cy="105" r="88" fill="none" stroke="var(--line)" stroke-width="15"/>
+                        <circle id="sohArc" cx="105" cy="105" r="88" fill="none" stroke="var(--warn)" stroke-width="15" stroke-linecap="round" transform="rotate(-90 105 105)" stroke-dasharray="553" stroke-dashoffset="553"/>
+                      </svg>
+                      <div class="val">
+                        <span class="big mono" id="sohNum">0</span>
+                        <span class="pct">State of Health</span>
+                        <span class="status-chip warn" style="margin-top:9px" id="sohChip">
+                          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+                          Degrading
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="metric-row" style="margin-top:6px">
+                    <div class="metric">
+                      <div class="k">Internal resistance</div>
+                      <div class="v mono">18.4 <small>m&#8486;</small></div>
+                      <div class="trend up">&#9650; +34% vs new</div>
+                    </div>
+                    <div class="metric">
+                      <div class="k">Charge acceptance</div>
+                      <div class="v mono">71 <small>%</small></div>
+                      <div class="trend down">&#9660; declining</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="acard tint-warn">
+                  <div class="card-title"><h4>Remaining useful life</h4></div>
+                  <div class="rul-head"><span class="num mono">6&ndash;9</span><span class="unit">weeks to replacement window</span></div>
+                  <div class="rul-bar">
+                    <span class="rul-seg-good" style="width:0"></span>
+                    <span class="rul-seg-warn" style="width:22%"></span>
+                    <span class="rul-seg-crit" style="width:78%"></span>
+                  </div>
+                  <div class="rul-ticks"><span>Today</span><span>~8 wks</span><span>End of life (80%)</span></div>
+                  <p class="band-note">
+                    <svg class="mini-ic" style="flex:0 0 auto;margin-top:1px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+                    A graded warning with an uncertainty band &mdash; not a fixed date. Sudden faults are flagged separately as anomalies.
+                  </p>
+                </div>
+
+                <div class="acard tint-good">
+                  <div class="nilm-bar" style="margin-bottom:0">
+                    <div class="nilm-ic" style="background:var(--good-wash);color:var(--good);border-color:transparent">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.09 12.11a1 1 0 0 0 .77 1.64H11l-1 8 8.91-10.11a1 1 0 0 0-.77-1.64H12l1-8Z"/></svg>
+                    </div>
+                    <div class="nilm-mid">
+                      <div class="nilm-top"><span>Adaptive charging active</span><span class="kwh" style="color:var(--good)">+18% life est.</span></div>
+                      <p style="font-size:.74rem;color:var(--ink-soft);font-weight:500;margin-top:2px">Temperature-compensated, anti-sulphation policy running.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="offline-flag">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0M8.5 16.1a6 6 0 0 1 7 0M12 20h.01"/><path d="m2 2 20 20" stroke="var(--good)"/></svg>
+                  All health decisions run on the Core &mdash; works through the blackout.
+                </div>
+              </section>
+
+              <!-- BLACKOUT -->
+              <section class="screen" id="s-blackout">
+                <div class="app-head">
+                  <div><div class="h">Blackout Autopilot</div><div class="sub">Essentials first, automatically</div></div>
+                  <div class="avatar">TC</div>
+                </div>
+
+                <div class="blk-banner" id="blkBanner">
+                  <button class="blk-toggle" id="blkToggle" onclick="toggleBlackout()">Simulate outage</button>
+                  <div class="st" id="blkState">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z"/></svg>
+                    Grid connected &middot; battery charging
+                  </div>
+                  <div class="big"><span class="mono" id="blkTime">— </span><span class="u" id="blkUnit">essentials backup</span></div>
+                  <div class="sub" id="blkSub">Sentinel pre-charged the battery ahead of the usual 7 PM cut.</div>
+                </div>
+
+                <div class="card-title" style="padding:2px 2px 8px"><h4>Load priority tiers</h4><span class="link" id="blkPct">Battery 92%</span></div>
+
+                <div class="tier keep" data-load="fridge">
+                  <span class="stripe"></span>
+                  <span class="licon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14M9 5v2M9 13v3"/></svg></span>
+                  <div class="lmid"><div class="lname">Refrigerator</div><div class="lmeta">120 W &middot; medical &amp; food</div></div>
+                  <span class="lstate">Keep</span>
+                </div>
+                <div class="tier keep" data-load="lights">
+                  <span class="stripe"></span>
+                  <span class="licon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z"/></svg></span>
+                  <div class="lmid"><div class="lname">Lights &amp; fans</div><div class="lmeta">180 W &middot; living areas</div></div>
+                  <span class="lstate">Keep</span>
+                </div>
+                <div class="tier keep" data-load="wifi">
+                  <span class="stripe"></span>
+                  <span class="licon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0M8.5 16.1a6 6 0 0 1 7 0M12 20h.01M2 8.8a16 16 0 0 1 20 0"/></svg></span>
+                  <div class="lmid"><div class="lname">Wi-Fi &amp; router</div><div class="lmeta">25 W &middot; connectivity</div></div>
+                  <span class="lstate">Keep</span>
+                </div>
+                <div class="tier defer" data-load="pump">
+                  <span class="stripe"></span>
+                  <span class="licon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-3-3-6.5-7-11-4 4.5-7 8-7 11a7 7 0 0 0 7 7Z"/></svg></span>
+                  <div class="lmid"><div class="lname">Water pump</div><div class="lmeta">750 W &middot; deferrable</div></div>
+                  <span class="lstate">Defer</span>
+                </div>
+                <div class="tier shed" data-load="geyser">
+                  <span class="stripe"></span>
+                  <span class="licon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3M12 2v3M16 2v3M4 8h16l-1.2 11a2 2 0 0 1-2 1.8H7.2a2 2 0 0 1-2-1.8L4 8Z"/></svg></span>
+                  <div class="lmid"><div class="lname">Geyser</div><div class="lmeta">2000 W &middot; non-critical</div></div>
+                  <span class="lstate">Shed</span>
+                </div>
+
+                <p class="band-note" style="padding:0 4px">
+                  <svg class="mini-ic" style="flex:0 0 auto;margin-top:1px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+                  Where a home carries sheddable load on the inverter, protecting essentials extends usable backup by ~10&ndash;20%. Loads default to <b>energised</b> on any fault.
+                </p>
+              </section>
+
+              <!-- ENERGY -->
+              <section class="screen" id="s-energy">
+                <div class="app-head">
+                  <div><div class="h">Energy Coach</div><div class="sub">Where your power goes</div></div>
+                  <div class="avatar">TC</div>
+                </div>
+
+                <div class="acard">
+                  <div class="card-title"><h4>Today &middot; disaggregated</h4><span class="link mono">8.4 kWh</span></div>
+                  <div class="nilm-bar">
+                    <div class="nilm-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-8-8v8Z"/><path d="M12 4a8 8 0 0 1 8 8"/></svg></div>
+                    <div class="nilm-mid"><div class="nilm-top"><span>Air conditioner</span><span class="kwh mono">3.1 kWh</span></div><div class="nilm-track"><i class="nilm-fill" style="width:74%"></i></div></div>
+                  </div>
+                  <div class="nilm-bar">
+                    <div class="nilm-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3M12 2v3M16 2v3M4 8h16l-1.2 11a2 2 0 0 1-2 1.8H7.2a2 2 0 0 1-2-1.8L4 8Z"/></svg></div>
+                    <div class="nilm-mid"><div class="nilm-top"><span>Geyser</span><span class="kwh mono">1.9 kWh</span></div><div class="nilm-track"><i class="nilm-fill" style="width:45%"></i></div></div>
+                  </div>
+                  <div class="nilm-bar">
+                    <div class="nilm-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M5 10h14"/></svg></div>
+                    <div class="nilm-mid"><div class="nilm-top"><span>Refrigerator</span><span class="kwh mono">1.6 kWh</span></div><div class="nilm-track"><i class="nilm-fill" style="width:38%"></i></div></div>
+                  </div>
+                  <div class="nilm-bar" style="margin-bottom:0">
+                    <div class="nilm-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M5.6 5.6l1.4 1.4M3 12h2M19 12h2M17 7l1.4-1.4M12 8a4 4 0 0 0-2 7.5V17h4v-1.5A4 4 0 0 0 12 8Z"/></svg></div>
+                    <div class="nilm-mid"><div class="nilm-top"><span>Lights &amp; others</span><span class="kwh mono">1.8 kWh</span></div><div class="nilm-track"><i class="nilm-fill" style="width:43%"></i></div></div>
+                  </div>
+                </div>
+
+                <div class="acard tint-brand">
+                  <div class="card-title"><h4 style="color:var(--brand-ink)">Grid Shield</h4><span class="status-chip" style="background:rgba(255,255,255,.5);color:var(--brand-ink)"><span class="dot" style="background:var(--brand)"></span>Monitoring</span></div>
+                  <div class="metric-row">
+                    <div class="metric" style="background:rgba(255,255,255,.55);border-color:transparent">
+                      <div class="k">Voltage now</div><div class="v mono">228 <small>V</small></div><div class="trend flat">Nominal 230 V</div>
+                    </div>
+                    <div class="metric" style="background:rgba(255,255,255,.55);border-color:transparent">
+                      <div class="k">Sags today</div><div class="v mono">3</div><div class="trend flat">detected &lt; 1 cycle</div>
+                    </div>
+                  </div>
+                  <p style="font-size:.76rem;color:var(--brand-ink);margin-top:11px;line-height:1.45">Detects disturbances within a cycle and logs them for appliance-protection analytics &mdash; honest detection, not prediction.</p>
+                </div>
+              </section>
+
+              <!-- BATTERY / REORDER -->
+              <section class="screen" id="s-battery">
+                <div class="app-head">
+                  <div><div class="h">Battery &amp; Warranty</div><div class="sub">Tubular lead-acid &middot; 150 Ah</div></div>
+                  <div class="avatar">TC</div>
+                </div>
+
+                <div class="acard tint-warn">
+                  <div class="card-title"><h4>Replacement window is near</h4></div>
+                  <p style="font-size:.84rem;color:var(--ink-soft);line-height:1.5">Sentinel expects this battery to reach its 80% end-of-life threshold in <b>6&ndash;9 weeks</b>. Reserve a genuine V-Guard swap now &mdash; doorstep fit, old battery collected.</p>
+                  <div style="margin-top:14px;display:flex;flex-direction:column;gap:9px">
+                    <button class="btn btn-primary"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>One-tap reorder &middot; &#8377;7,200</button>
+                    <button class="btn btn-ghost">Book a service visit</button>
+                  </div>
+                </div>
+
+                <div class="acard">
+                  <div class="card-title"><h4>Battery specification</h4></div>
+                  <div class="spec-line"><span class="k">Chemistry</span><span class="v">Tubular lead-acid</span></div>
+                  <div class="spec-line"><span class="k">Installed</span><span class="v mono">Mar 2022 &middot; 41 mo</span></div>
+                  <div class="spec-line"><span class="k">Cycles logged</span><span class="v mono">1,148</span></div>
+                  <div class="spec-line"><span class="k">Avg. terminal temp</span><span class="v mono">39.2 &deg;C</span></div>
+                  <div class="spec-line"><span class="k">Warranty status</span><span class="v" style="color:var(--good)">Active &middot; data-backed</span></div>
+                </div>
+
+                <div class="acard">
+                  <div class="card-title"><h4>Signed health log</h4><span class="link">Export</span></div>
+                  <div class="warranty-log">
+                    <div class="log-row"><span class="log-dot" style="background:var(--warn)"></span><div><div class="lt">SoH crossed 85%</div><div class="ld">Graded warning raised &middot; 12 Aug 2026</div></div><span class="log-hash mono">0x9f3a…</span></div>
+                    <div class="log-row"><span class="log-dot"></span><div><div class="lt">Deep-discharge event</div><div class="ld">Auto-recovered charge policy &middot; 28 Jul 2026</div></div><span class="log-hash mono">0x2c71…</span></div>
+                    <div class="log-row"><span class="log-dot" style="background:var(--good)"></span><div><div class="lt">Anti-sulphation cycle</div><div class="ld">Completed &middot; 14 Jul 2026</div></div><span class="log-hash mono">0xa0e8…</span></div>
+                  </div>
+                  <p class="band-note">Append-only, device-key signed &mdash; turns warranty from a dispute into a one-tap, data-backed claim.</p>
+                </div>
+              </section>
+
+            </div>
+
+            <!-- bottom nav -->
+            <nav class="tabbar" role="tablist" aria-label="App sections">
+              <button class="tab" role="tab" aria-selected="true" data-screen="s-home" onclick="showScreen(this)">
+                <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Home
+              </button>
+              <button class="tab" role="tab" aria-selected="false" data-screen="s-blackout" onclick="showScreen(this)">
+                <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-9 12h7l-1 8 9-12h-7l1-8Z"/></svg>Blackout
+              </button>
+              <button class="tab" role="tab" aria-selected="false" data-screen="s-energy" onclick="showScreen(this)">
+                <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 3-4 3 3 4-6"/></svg>Energy
+              </button>
+              <button class="tab" role="tab" aria-selected="false" data-screen="s-battery" onclick="showScreen(this)">
+                <svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="18" height="10" rx="2"/><path d="M22 11v2M6 11v2M10 11v2M14 11v2"/></svg>Battery
+              </button>
+            </nav>
+
+          </div>
+        </div>
+      </div>
+
+      <aside class="notes">
+        <h3>What the homeowner never has to think about</h3>
+        <p style="color:var(--muted);font-size:.9rem;margin:8px 0 18px;line-height:1.55">Every screen is driven by the on-device engines. The phone is only a window &mdash; pull the internet and the Core keeps deciding.</p>
+
+        <div class="note">
+          <div class="nh"><span class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>Engine 1 &middot; Predictive health</div>
+          <p>Coulomb counting, OCV and an internal-resistance probe are fused by a Kalman filter, then a tiny quantised model maps the trend to SoH and an RUL window.</p>
+        </div>
+        <div class="note">
+          <div class="nh"><span class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-9 12h7l-1 8 9-12h-7l1-8Z"/></svg></span>Engine 2 &middot; Blackout autopilot</div>
+          <p>Robust rule-based tiers made smarter by a learned demand-and-outage forecaster. Pre-charges before a predicted cut; sheds through external contactors.</p>
+        </div>
+        <div class="note">
+          <div class="nh"><span class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 3-4 3 3 4-6"/></svg></span>Engine 3 &middot; Coach &amp; Grid Shield</div>
+          <p>Low-frequency load disaggregation for headline appliances, plus one-cycle RMS sag/swell detection logged for appliance-protection analytics.</p>
+        </div>
+        <div class="note" style="margin-bottom:0">
+          <div class="nh"><span class="ni"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg></span>Engine 4 &middot; Fleet intelligence</div>
+          <p>Anonymised telemetry sharpens the shared models centrally, with optional privacy-preserving federated learning for connected homes.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<!-- ============ DASHBOARD SURFACE ============ -->
+<main class="wrap pane" id="pane-dash" role="tabpanel" aria-labelledby="tab-dash" hidden>
+  <div class="section-pad">
+    <div class="dash">
+      <aside class="dside">
+        <div class="grp">V-Guard Ops</div>
+        <div class="dnav" aria-selected="true"><svg class="di" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Fleet overview</div>
+        <div class="dnav"><svg class="di" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Battery health</div>
+        <div class="dnav"><svg class="di" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>Grid events</div>
+        <div class="dnav"><svg class="di" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Federated learning</div>
+        <div class="grp">Service</div>
+        <div class="dnav"><svg class="di" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6a2 2 0 1 0 2.8 2.8l6-6a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.3-2.3 2.5-2.5Z"/></svg>Warranty claims</div>
+        <div class="dnav"><svg class="di" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>Aftermarket</div>
+      </aside>
+
+      <div class="dmain">
+        <div class="dhead">
+          <div>
+            <div class="eyebrow">Smart-Pro pilot fleet &middot; Ernakulam cluster</div>
+            <h2>Fleet overview</h2>
+            <div class="sub">4,182 connected Cores reporting &middot; updated 3 min ago</div>
+          </div>
+          <div class="dsearch">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            Search unit ID…
+          </div>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi">
+            <div class="kt"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Fleet mean SoH</div>
+            <div class="kv mono">88.6<span class="u">%</span></div>
+            <div class="kd" style="color:var(--good)">&#9660; 0.4% / month &middot; healthy</div>
+            <svg class="spark" width="70" height="28" viewBox="0 0 70 28" fill="none"><path d="M2 8 L14 10 L26 9 L38 13 L50 15 L62 18 L68 20" stroke="var(--good)" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="kpi">
+            <div class="kt"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2 18a2 2 0 0 0 1.7 3h16.6a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>Replace &lt; 8 weeks</div>
+            <div class="kv mono">217</div>
+            <div class="kd" style="color:var(--warn)">&#9650; 12 flagged this week</div>
+            <svg class="spark" width="70" height="28" viewBox="0 0 70 28" fill="none"><path d="M2 20 L14 18 L26 19 L38 15 L50 13 L62 9 L68 7" stroke="var(--warn)" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="kpi">
+            <div class="kt"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>Grid events / 24h</div>
+            <div class="kv mono">1,904</div>
+            <div class="kd" style="color:var(--muted)">sags &amp; swells detected</div>
+            <svg class="spark" width="70" height="28" viewBox="0 0 70 28" fill="none"><path d="M2 16 L10 8 L18 18 L26 12 L34 20 L42 10 L50 17 L58 9 L68 15" stroke="var(--brand)" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="kpi">
+            <div class="kt"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Warranty saved</div>
+            <div class="kv mono">&#8377;41<span class="u">L</span></div>
+            <div class="kd" style="color:var(--good)">prevented failures, qtr</div>
+            <svg class="spark" width="70" height="28" viewBox="0 0 70 28" fill="none"><path d="M2 22 L14 20 L26 16 L38 14 L50 10 L62 6 L68 4" stroke="var(--good)" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <div class="dcard">
+              <div class="dcard-h"><h3>Units needing attention</h3><span class="hint">Ranked by RUL window</span></div>
+              <div style="overflow-x:auto">
+              <table class="ftable">
+                <thead><tr><th>Unit</th><th>State of health</th><th>RUL window</th><th>Temp stress</th><th>Status</th></tr></thead>
+                <tbody id="fleetBody"></tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="dcard" id="unitDetail">
+              <div class="dcard-h"><h3 id="udTitle">Unit VG-4471</h3><span class="hbadge crit" id="udBadge"><span class="hd"></span>Replace</span></div>
+              <div class="gauge-wrap" style="padding:0 0 6px">
+                <svg width="150" height="86" viewBox="0 0 150 86">
+                  <path d="M12 80 A63 63 0 0 1 138 80" fill="none" stroke="var(--line)" stroke-width="12" stroke-linecap="round"/>
+                  <path id="udArc" d="M12 80 A63 63 0 0 1 138 80" fill="none" stroke="var(--crit)" stroke-width="12" stroke-linecap="round" stroke-dasharray="198" stroke-dashoffset="60"/>
+                  <text x="75" y="66" text-anchor="middle" class="mono" id="udSoh" style="font-size:26px;font-weight:600;fill:var(--ink)">79%</text>
+                </svg>
+              </div>
+              <div class="telem">
+                <div class="t"><div class="k">Internal resistance</div><div class="v mono" id="udIr">21.7 <small>m&#8486;</small></div></div>
+                <div class="t"><div class="k">Charge acceptance</div><div class="v mono" id="udCa">64 <small>%</small></div></div>
+                <div class="t"><div class="k">Terminal temp</div><div class="v mono" id="udTemp">43.1 <small>&deg;C</small></div></div>
+                <div class="t"><div class="k">Cycles</div><div class="v mono" id="udCyc">1,402</div></div>
+              </div>
+              <div style="margin-top:14px;display:flex;gap:9px">
+                <button class="btn btn-primary" style="width:auto;flex:1">Schedule swap</button>
+                <button class="btn btn-ghost" style="width:auto">Log</button>
+              </div>
+              <p class="band-note">Predicted replacement window <b style="color:var(--crit)">2&ndash;4 weeks</b> &middot; ±5% SoH band after on-device quantisation.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="dcard">
+            <div class="dcard-h"><h3>Grid disturbance log</h3><span class="hint">IEC 61000-4-30 Class-S-like</span></div>
+            <div class="elog">
+              <div class="erow"><span class="esev crit"></span><div><div class="em">Voltage sag &middot; 172 V</div><div class="ed">Cluster feeder 7 &middot; 14 units affected</div></div><span class="et">2m ago</span></div>
+              <div class="erow"><span class="esev warn"></span><div><div class="em">Swell &middot; 268 V</div><div class="ed">VG-3390 &middot; appliance-protection flag</div></div><span class="et">18m ago</span></div>
+              <div class="erow"><span class="esev warn"></span><div><div class="em">Repeated sag pattern</div><div class="ed">Evening 5&ndash;11 PM window &middot; feeder 3</div></div><span class="et">1h ago</span></div>
+              <div class="erow"><span class="esev info"></span><div><div class="em">Local motor-start dip</div><div class="ed">VG-4471 &middot; self-caused, advisory</div></div><span class="et">3h ago</span></div>
+            </div>
+          </div>
+
+          <div class="dcard">
+            <div class="dcard-h"><h3>Federated learning</h3><span class="hbadge good"><span class="hd"></span>Round 214 live</span></div>
+            <div class="fed-node">
+              <span class="fi"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/></svg></span>
+              <div class="fm"><div class="fn">Central training</div><div class="fs">Aggregating anonymised fleet telemetry</div></div>
+              <span class="fstat">+2.1% acc</span>
+            </div>
+            <div class="fed-node">
+              <span class="fi"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2.4"/></svg></span>
+              <div class="fm"><div class="fn">Edge rounds (phone/gateway)</div><div class="fs">1,846 clients participated today</div></div>
+              <span class="fstat">on-device</span>
+            </div>
+            <div class="fed-node">
+              <span class="fi"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3Z"/></svg></span>
+              <div class="fm"><div class="fn">Secure aggregation</div><div class="fs">Server sees only the summed update</div></div>
+              <span class="fstat">verified</span>
+            </div>
+            <div class="privacy-badges">
+              <span class="pbadge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3Z"/></svg>Differential Privacy &middot; &#949;&#8776;4</span>
+              <span class="pbadge">Flower framework</span>
+              <span class="pbadge">No raw data leaves home</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- engines strip -->
+        <div class="dcard-h" style="margin-top:8px"><h3>Four engines, one AI Core</h3><span class="hint">ESP32-S3 &middot; int8 TinyML &middot; offline-first</span></div>
+        <div class="engines">
+          <div class="engine"><span class="en">01</span><div class="ei"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h4>Predictive Health</h4><p>SoH &amp; RUL with an uncertainty band; adaptive charge-and-thermal policy extends life.</p></div>
+          <div class="engine"><span class="en">02</span><div class="ei"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-9 12h7l-1 8 9-12h-7l1-8Z"/></svg></div><h4>Blackout Autopilot</h4><p>Learned forecaster over robust rule-based tiers; protects essentials, sheds the rest.</p></div>
+          <div class="engine"><span class="en">03</span><div class="ei"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 14 3-4 3 3 4-6"/></svg></div><h4>Coach &amp; Grid Shield</h4><p>Load disaggregation for headline appliances; one-cycle sag/swell detection.</p></div>
+          <div class="engine"><span class="en">04</span><div class="ei"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></div><h4>Fleet Intelligence</h4><p>Accuracy compounds as V-Guard's proprietary fleet data grows &mdash; an un-copyable moat.</p></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="wrap footer">
+  <span class="credit">V-Guard Sentinel</span>
+  <span class="disc">Interactive concept prototype built from the Big Idea Tech 2026 detailed report. Figures are illustrative targets, pre-validation &mdash; scoped, as the report is, to the boundary between what is deployable today and what remains a research target.</span>
+</footer>
+
+<script>
+/* ---------- theme ---------- */
+function currentTheme(){
+  const r=document.documentElement;
+  if(r.getAttribute('data-theme'))return r.getAttribute('data-theme');
+  return matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+}
+function setThemeIcon(t){
+  const el=document.getElementById('themeIc');
+  if(t==='dark'){el.innerHTML='<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>';}
+  else{el.innerHTML='<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';}
+}
+function toggleTheme(){
+  const next=currentTheme()==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  setThemeIcon(next);
+}
+setThemeIcon(currentTheme());
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(!document.documentElement.getAttribute('data-theme'))setThemeIcon(currentTheme());});
+
+/* ---------- surface switch ---------- */
+function showSurface(which){
+  const app=which==='app';
+  document.getElementById('tab-app').setAttribute('aria-selected',app);
+  document.getElementById('tab-dash').setAttribute('aria-selected',!app);
+  const pa=document.getElementById('pane-app'), pd=document.getElementById('pane-dash');
+  pa.classList.toggle('active',app); pd.classList.toggle('active',!app);
+  pa.hidden=!app; pd.hidden=app;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------- app screen nav ---------- */
+function showScreen(btn){
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected','false'));
+  btn.setAttribute('aria-selected','true');
+  const id=btn.dataset.screen;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id));
+  document.getElementById('appBody').scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ---------- animated SoH gauge ---------- */
+function animateGauge(){
+  const arc=document.getElementById('sohArc'), num=document.getElementById('sohNum');
+  const C=553, target=83; // SoH %
+  const off=C - C*(target/100);
+  let start=null;
+  function step(ts){
+    if(!start)start=ts;
+    const p=Math.min((ts-start)/1100,1);
+    const e=1-Math.pow(1-p,3);
+    arc.style.strokeDashoffset=(C-(C-off)*e).toFixed(1);
+    num.textContent=Math.round(target*e);
+    if(p<1)requestAnimationFrame(step);
+  }
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+    arc.style.strokeDashoffset=off; num.textContent=target; return;
+  }
+  requestAnimationFrame(step);
+}
+
+/* ---------- blackout simulation ---------- */
+let blkOn=false, blkTimer=null, blkPct=92, blkMins=1000; // ~16h40m essentials
+function fmt(m){const h=Math.floor(m/60),mm=Math.floor(m%60);return h+'h '+String(mm).padStart(2,'0')+'m';}
+function toggleBlackout(){
+  blkOn=!blkOn;
+  const banner=document.getElementById('blkBanner'),state=document.getElementById('blkState'),
+        sub=document.getElementById('blkSub'),tog=document.getElementById('blkToggle'),
+        unit=document.getElementById('blkUnit');
+  const shedLoads=document.querySelectorAll('.tier.shed,.tier.defer');
+  if(blkOn){
+    banner.classList.add('live'); tog.textContent='Restore grid';
+    state.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-9 12h7l-1 8 9-12h-7l1-8Z"/></svg> Grid down &middot; running on battery';
+    sub.textContent='Non-critical loads shed automatically. Essentials protected.';
+    unit.textContent='essentials remaining';
+    shedLoads.forEach((t,i)=>setTimeout(()=>t.classList.add('is-shed'), 250+i*220));
+    blkTimer=setInterval(()=>{
+      blkMins-=7; blkPct=Math.max(4,blkPct-0.35);
+      if(blkMins<=0){blkMins=0;clearInterval(blkTimer);}
+      render();
+    },900);
+  }else{
+    banner.classList.remove('live'); tog.textContent='Simulate outage';
+    state.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.1V17h6v-.2c0-.8.4-1.6 1-2.1A7 7 0 0 0 12 2Z"/></svg> Grid connected &middot; battery charging';
+    sub.textContent='Sentinel pre-charged the battery ahead of the usual 7 PM cut.';
+    unit.textContent='essentials backup';
+    shedLoads.forEach(t=>t.classList.remove('is-shed'));
+    clearInterval(blkTimer); blkPct=92; blkMins=1000; render();
+  }
+  render();
+}
+function render(){
+  document.getElementById('blkTime').textContent=blkOn?fmt(blkMins):'16h 40m';
+  document.getElementById('blkPct').textContent='Battery '+Math.round(blkPct)+'%';
+}
+render();
+
+/* ---------- fleet table ---------- */
+const fleet=[
+  {id:'VG-4471',loc:'Aluva &middot; feeder 3',soh:79,rul:'2–4 wk',temp:'43.1°C',ts:'high',st:'crit',stt:'Replace',ir:'21.7',ca:'64',cyc:'1,402',arc:60},
+  {id:'VG-3390',loc:'Kakkanad &middot; feeder 7',soh:83,rul:'6–9 wk',temp:'41.4°C',ts:'high',st:'warn',stt:'Degrading',ir:'18.9',ca:'70',cyc:'1,196',arc:42},
+  {id:'VG-5028',loc:'Edappally &middot; feeder 2',soh:85,rul:'8–12 wk',temp:'39.8°C',ts:'med',st:'warn',stt:'Degrading',ir:'17.2',ca:'73',cyc:'1,041',arc:34},
+  {id:'VG-2210',loc:'Tripunithura &middot; f5',soh:91,rul:'22+ wk',temp:'37.1°C',ts:'med',st:'good',stt:'Healthy',ir:'13.6',ca:'86',cyc:'742',arc:18},
+  {id:'VG-6613',loc:'Perumbavoor &middot; f9',soh:94,rul:'30+ wk',temp:'35.4°C',ts:'low',st:'good',stt:'Healthy',ir:'11.9',ca:'91',cyc:'488',arc:12},
+];
+const sohColor=s=>s.st==='crit'?'var(--crit)':s.st==='warn'?'var(--warn)':'var(--good)';
+function renderFleet(){
+  const tb=document.getElementById('fleetBody');
+  tb.innerHTML=fleet.map((u,i)=>`
+    <tr class="rowbtn ${i===0?'sel':''}" data-i="${i}" onclick="selUnit(${i})">
+      <td><div class="unit-id">${u.id}<small>${u.loc}</small></div></td>
+      <td><div class="soh-cell"><span class="mono" style="font-weight:600;min-width:34px">${u.soh}%</span><span class="soh-mini"><i style="width:${u.soh}%;background:${sohColor(u)}"></i></span></div></td>
+      <td class="mono" style="font-weight:600;color:${sohColor(u)}">${u.rul}</td>
+      <td><span class="etag">${u.ts}</span></td>
+      <td><span class="hbadge ${u.st}"><span class="hd"></span>${u.stt}</span></td>
+    </tr>`).join('');
+}
+function selUnit(i){
+  const u=fleet[i];
+  document.querySelectorAll('#fleetBody tr').forEach(r=>r.classList.toggle('sel',+r.dataset.i===i));
+  document.getElementById('udTitle').textContent='Unit '+u.id;
+  const badge=document.getElementById('udBadge');
+  badge.className='hbadge '+u.st; badge.innerHTML='<span class="hd"></span>'+u.stt;
+  document.getElementById('udSoh').textContent=u.soh+'%';
+  document.getElementById('udSoh').style.fill=sohColor(u);
+  const arc=document.getElementById('udArc');
+  arc.setAttribute('stroke',sohColor(u));
+  arc.setAttribute('stroke-dashoffset',(198-198*(u.soh/100)).toFixed(0));
+  document.getElementById('udIr').innerHTML=u.ir+' <small>m&#8486;</small>';
+  document.getElementById('udCa').innerHTML=u.ca+' <small>%</small>';
+  document.getElementById('udTemp').innerHTML=u.temp.replace('°C',' <small>&deg;C</small>');
+  document.getElementById('udCyc').textContent=u.cyc;
+}
+renderFleet();
+
+/* ---------- init ---------- */
+selUnit(0);
+window.addEventListener('load',()=>{setTimeout(animateGauge,180);});
+</script>
