@@ -1,0 +1,25 @@
+<mxfile host="app.diagrams.net" agent="V-Guard Sentinel" version="24.7.0">
+  <diagram id="fed2" name="Fleet Learning (central + optional FL)">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" value="Fleet Learning — central-primary, federated optional" style="text;html=1;fontSize=17;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="40" y="10" width="900" height="30" as="geometry"/></mxCell>
+        <mxCell id="prim" value="PRIMARY PATH: units log anonymised battery telemetry → V-Guard central training → OTA model updates" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="40" y="55" width="900" height="34" as="geometry"/></mxCell>
+        <mxCell id="s1" value="1 · Cloud pre-train base model&#10;(NASA/CALCE + aging campaign)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8e0f2;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1"><mxGeometry x="60" y="110" width="240" height="92" as="geometry"/></mxCell>
+        <mxCell id="s2" value="2 · OTA deploy quantized&#10;model to fleet" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="380" y="95" width="240" height="92" as="geometry"/></mxCell>
+        <mxCell id="s3" value="3 · On-device inference +&#10;(optional) local personalization&#10;(gateway / phone)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="700" y="110" width="240" height="92" as="geometry"/></mxCell>
+        <mxCell id="s4" value="4 · Local update ΔW + DP noise&#10;(ε≈4, δ=1e-5); tens of KB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1"><mxGeometry x="700" y="320" width="240" height="92" as="geometry"/></mxCell>
+        <mxCell id="s5" value="5 · Secure aggregation at&#10;V-Guard server (never raw data)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e8e0f2;strokeColor=#9673a6;fontSize=10;" vertex="1" parent="1"><mxGeometry x="380" y="380" width="240" height="92" as="geometry"/></mxCell>
+        <mxCell id="s6" value="6 · New global model →&#10;back to deploy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="60" y="320" width="240" height="92" as="geometry"/></mxCell>
+        <mxCell id="e_s1_s2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="s1" target="s2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_s2_s3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="s2" target="s3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_s3_s4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="s3" target="s4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_s4_s5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="s4" target="s5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_s5_s6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="s5" target="s6"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_s6_s1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="s6" target="s1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="opt" value="OPTIONAL federated path (steps 3–6) — for connected units only; depends on a gateway/phone + connectivity" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fbfbea;strokeColor=#d6b656;fontSize=9;fontStyle=1;" vertex="1" parent="1"><mxGeometry x="360" y="225" width="320" height="80" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

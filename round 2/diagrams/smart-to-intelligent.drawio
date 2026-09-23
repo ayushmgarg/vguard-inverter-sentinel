@@ -1,0 +1,14 @@
+<mxfile host="app.diagrams.net" agent="V-Guard Sentinel" version="24.7.0">
+  <diagram id="s2i-01" name="Smart to Intelligent">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" value="From Smart Products to Intelligent Products" style="text;html=1;fontSize=18;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="40" y="20" width="1090" height="30" as="geometry"/></mxCell>
+        <mxCell id="smart" value="TODAY: “SMART” products&#10;(connected, but reactive)&#10;&#10;• App / Wi-Fi / Alexa control&#10;• Remote on/off &amp; manual modes&#10;• Shows present state only&#10;• Cloud-dependent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=13;align=left;verticalAlign=top;spacingLeft=12;spacingTop=10;" vertex="1" parent="1"><mxGeometry x="120" y="110" width="360" height="320" as="geometry"/></mxCell>
+        <mxCell id="arrow" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1"><mxGeometry x="520" y="230" width="140" height="80" as="geometry"/></mxCell>
+        <mxCell id="intel" value="TOMORROW: “INTELLIGENT” products&#10;V-Guard Sentinel (self-aware)&#10;&#10;• Predicts its own failures (battery RUL)&#10;• Learns your habits &amp; auto-optimises&#10;• Acts autonomously — even offline&#10;• Whole fleet improves via federated learning" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;align=left;verticalAlign=top;spacingLeft=12;spacingTop=10;" vertex="1" parent="1"><mxGeometry x="690" y="110" width="400" height="320" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

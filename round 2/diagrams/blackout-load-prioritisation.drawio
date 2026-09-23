@@ -1,0 +1,20 @@
+<mxfile host="app.diagrams.net" agent="V-Guard Sentinel" version="24.7.0">
+  <diagram id="blk-01" name="Blackout Load Prioritisation">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" value="Blackout runtime — with vs without Sentinel" style="text;html=1;fontSize=18;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="40" y="20" width="1000" height="30" as="geometry"/></mxCell>
+        <mxCell id="axl" value="Backup runtime during an outage  →" style="text;html=1;fontStyle=1;fontSize=11;align=left;" vertex="1" parent="1"><mxGeometry x="120" y="90" width="500" height="20" as="geometry"/></mxCell>
+        <mxCell id="b1lbl" value="WITHOUT Sentinel" style="text;html=1;fontStyle=1;fontSize=12;align=left;" vertex="1" parent="1"><mxGeometry x="120" y="150" width="180" height="40" as="geometry"/></mxCell>
+        <mxCell id="b1" value="4.0 h — all loads share the battery" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=center;" vertex="1" parent="1"><mxGeometry x="310" y="150" width="400" height="40" as="geometry"/></mxCell>
+        <mxCell id="b2lbl" value="WITH Sentinel" style="text;html=1;fontStyle=1;fontSize=12;align=left;" vertex="1" parent="1"><mxGeometry x="120" y="220" width="180" height="40" as="geometry"/></mxCell>
+        <mxCell id="b2" value="5.2 h — critical loads protected, others shed" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=center;" vertex="1" parent="1"><mxGeometry x="310" y="220" width="520" height="40" as="geometry"/></mxCell>
+        <mxCell id="gain" value="+20–30% backup, automatically" style="text;html=1;fontStyle=1;fontColor=#82b366;fontSize=12;align=left;" vertex="1" parent="1"><mxGeometry x="850" y="220" width="260" height="40" as="geometry"/></mxCell>
+        <mxCell id="prot" value="PROTECTED  →  Refrigerator • Lights • Wi-Fi • Medical device" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1"><mxGeometry x="120" y="310" width="600" height="40" as="geometry"/></mxCell>
+        <mxCell id="shed" value="SHED  →  Air-conditioner • Water heater (non-critical)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1"><mxGeometry x="120" y="360" width="600" height="40" as="geometry"/></mxCell>
+        <mxCell id="note" value="Sentinel decides on-device, in real time — no internet, no user action." style="text;html=1;fontStyle=2;fontSize=11;align=left;" vertex="1" parent="1"><mxGeometry x="120" y="420" width="700" height="20" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

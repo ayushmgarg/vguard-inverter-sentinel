@@ -1,0 +1,34 @@
+; V-Guard Sentinel AI Core - AutoCAD script (2D plan + 3D massing)
+; USAGE: AutoCAD -> type SCRIPT -> select this file.  Units = mm.
+; Blank lines are intentional (they act as Enter to finish commands).
+; For the full parametric/dimensioned version use sentinel-ai-core.lsp or open the .dxf.
+_.-LAYER _M ENCLOSURE _C 7 ENCLOSURE _M PCB _C 3 PCB _M HOLES _C 1 HOLES _M COMP _C 5 COMP _M DIM _C 8 DIM
+
+_.-LAYER _S ENCLOSURE
+
+_.RECTANG 0,0 95,70
+_.-LAYER _S PCB
+
+_.RECTANG 7.5,5 87.5,65
+_.-LAYER _S HOLES
+
+_.CIRCLE 4,4 1.75
+_.CIRCLE 91,4 1.75
+_.CIRCLE 4,66 1.75
+_.CIRCLE 91,66 1.75
+_.-LAYER _S COMP
+
+_.RECTANG 11.5,44 31.5,62
+_.RECTANG 67,44 83,62
+_.RECTANG 11.5,16 29.5,28
+_.RECTANG 33,16 49,28
+_.RECTANG 51,16 61,26
+_.RECTANG 63,16 81,32
+_.-LAYER _S DIM
+
+_.DIMLINEAR 0,0 95,0 47,-12
+_.DIMLINEAR 0,0 0,70 -12,35
+_.-LAYER _S ENCLOSURE
+
+_.BOX 0,120,0 95,190,35
+_.ZOOM _E

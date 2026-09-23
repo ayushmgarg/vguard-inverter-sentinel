@@ -1,0 +1,21 @@
+<mxfile host="app.diagrams.net" agent="V-Guard Sentinel" version="24.7.0">
+  <diagram id="road-01" name="Platform Roadmap">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" value="One reusable AI platform → an intelligent V-Guard portfolio" style="text;html=1;fontSize=18;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="40" y="20" width="1000" height="30" as="geometry"/></mxCell>
+        <mxCell id="core" value="V-Guard Sentinel&#10;AI Core (reusable)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="470" y="250" width="220" height="90" as="geometry"/></mxCell>
+        <mxCell id="p1" value="Inverter / UPS + Battery&#10;Phase 1 (0–6 mo) — FLAGSHIP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1"><mxGeometry x="120" y="80" width="300" height="90" as="geometry"/></mxCell>
+        <mxCell id="e_p1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;" edge="1" parent="1" source="core" target="p1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p2" value="Pumps&#10;Phase 3 — bearing-wear &amp; dry-run prediction" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1"><mxGeometry x="120" y="430" width="300" height="90" as="geometry"/></mxCell>
+        <mxCell id="e_p2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;" edge="1" parent="1" source="core" target="p2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p3" value="Stabilizers&#10;Phase 3 — voltage-event prediction" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1"><mxGeometry x="760" y="80" width="300" height="90" as="geometry"/></mxCell>
+        <mxCell id="e_p3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;" edge="1" parent="1" source="core" target="p3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="p4" value="Water Heaters&#10;Phase 3 — predictive preheating" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1"><mxGeometry x="760" y="430" width="300" height="90" as="geometry"/></mxCell>
+        <mxCell id="e_p4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#333333;" edge="1" parent="1" source="core" target="p4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="tl" value="Phase 1 → Phase 2 (retrofit AI Core module) → Phase 3 (portfolio rollout, coordinated as one home)" style="text;html=1;fontStyle=2;fontSize=11;align=center;" vertex="1" parent="1"><mxGeometry x="120" y="560" width="940" height="20" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,29 @@
+<mxfile host="app.diagrams.net" agent="V-Guard Sentinel" version="24.7.0">
+  <diagram id="rul2" name="Battery RUL Flow">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t" value="Battery SoH / RUL Estimation — Signal Flow" style="text;html=1;fontSize=17;fontStyle=1;align=center;" vertex="1" parent="1"><mxGeometry x="40" y="10" width="900" height="30" as="geometry"/></mxCell>
+        <mxCell id="in" value="Sensor inputs&#10;I · V · T" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef6ee;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="40" y="180" width="120" height="80" as="geometry"/></mxCell>
+        <mxCell id="cc" value="Coulomb counting&#10;∫I·dt → SoC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="210" y="120" width="150" height="60" as="geometry"/></mxCell>
+        <mxCell id="ocv" value="OCV @ rest&#10;correction" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="210" y="200" width="150" height="60" as="geometry"/></mxCell>
+        <mxCell id="rint" value="R_int from ΔV/ΔI of&#10;natural load steps" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="210" y="280" width="150" height="60" as="geometry"/></mxCell>
+        <mxCell id="ekf" value="Extended Kalman&#10;Filter (state fusion)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;" vertex="1" parent="1"><mxGeometry x="410" y="180" width="160" height="90" as="geometry"/></mxCell>
+        <mxCell id="fv" value="Feature vector&#10;ΔV under load · R_int (T/SOC-&#10;normalised) · Ah throughput ·&#10;DoD hist · temp-stress · ICA peaks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=10;" vertex="1" parent="1"><mxGeometry x="620" y="150" width="190" height="150" as="geometry"/></mxCell>
+        <mxCell id="ml" value="TinyML SoH/RUL&#10;model (GRU · int8)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;" vertex="1" parent="1"><mxGeometry x="860" y="150" width="150" height="70" as="geometry"/></mxCell>
+        <mxCell id="out" value="Outputs: SoH % ·&#10;RUL window · charge policy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" vertex="1" parent="1"><mxGeometry x="860" y="260" width="150" height="70" as="geometry"/></mxCell>
+        <mxCell id="note" value="Prototyped on NASA/CALCE (Li-ion) via transfer learning; specialised on the in-house lead-acid aging campaign" style="text;html=1;fontSize=9;fontStyle=2;align=left;" vertex="1" parent="1"><mxGeometry x="620" y="320" width="390" height="30" as="geometry"/></mxCell>
+        <mxCell id="e_in_cc" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="in" target="cc"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_in_ocv" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="in" target="ocv"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_in_rint" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="in" target="rint"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_cc_ekf" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="cc" target="ekf"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_ocv_ekf" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="ocv" target="ekf"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_rint_ekf" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="rint" target="ekf"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_ekf_fv" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="ekf" target="fv"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_fv_ml" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="fv" target="ml"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e_ml_out" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1f3a5f;" edge="1" parent="1" source="ml" target="out"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
