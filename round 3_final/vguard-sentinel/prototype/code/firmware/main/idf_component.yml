@@ -1,0 +1,8 @@
+# firmware/main/idf_component.yml -- managed component dependencies for main.c.
+# LittleFS is not an ESP-IDF built-in component; joltwallet/littlefs vendors it as
+# a component literally named "esp_littlefs" (what main/CMakeLists.txt REQUIRES).
+dependencies:
+  joltwallet/littlefs:
+    version: "^1.14.0"
+  idf:
+    version: ">=5.0"

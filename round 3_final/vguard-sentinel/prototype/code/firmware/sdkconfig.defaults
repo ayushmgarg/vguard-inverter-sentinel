@@ -1,0 +1,87 @@
+# V-Guard Sentinel Core -- sdkconfig.defaults for ESP32-S3-WROOM-1-N16R8.
+# Applied by `idf.py set-target esp32s3` (writes CONFIG_IDF_TARGET_ESP32S3=y from the
+# target set at configure time; the CONFIG_IDF_TARGET_* line below is informational).
+# NOT executed in this environment (no ESP-IDF installed) -- see firmware/README.md
+# "what was executed here".
+
+# ---- target / chip ----------------------------------------------------------------
+CONFIG_IDF_TARGET="esp32s3"
+
+# ---- flash / PSRAM (03-Parts-Placement C1: ESP32-S3-WROOM-1-N16R8) -----------------
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+CONFIG_ESPTOOLPY_FLASHSIZE="16MB"
+CONFIG_ESPTOOLPY_FLASHMODE_QIO=y
+CONFIG_ESPTOOLPY_FLASHFREQ_80M=y
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_MODE_OCT=y                 # N16R8 has octal PSRAM
+CONFIG_SPIRAM_SPEED_80M=y
+CONFIG_SPIRAM_USE_MALLOC=y
+CONFIG_SPIRAM_TRY_ALLOCATE_WIFI_LWIP=y
+# NILM 1-min aggregates + log staging live in PSRAM (design 04 §3); control-path
+# buffers (Sample ring, EKF, autopilot, sentinel_int8 activations) stay in internal
+# SRAM -- never route those through CONFIG_SPIRAM_USE_MALLOC's default heap since the
+# control path must not depend on PSRAM cache-miss latency (see main/README notes).
+
+# ---- partition table -----------------------------------------------------------
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+CONFIG_PARTITION_TABLE_FILENAME="partitions.csv"
+CONFIG_PARTITION_TABLE_OFFSET=0x8000
+
+# ---- FreeRTOS / dual-core (design 04 §2: Core0 protocol, Core1 application) --------
+CONFIG_FREERTOS_UNICORE=n
+CONFIG_FREERTOS_HZ=1000
+CONFIG_ESP_TASK_WDT_EN=y
+CONFIG_ESP_TASK_WDT_CHECK_IDLE_TASK_CPU0=y
+CONFIG_ESP_TASK_WDT_CHECK_IDLE_TASK_CPU1=y
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=5
+
+# ---- coredump (partitions.csv "coredump", 64 KB) -----------------------------
+CONFIG_ESP_COREDUMP_ENABLE_TO_FLASH=y
+CONFIG_ESP_COREDUMP_DATA_FORMAT_ELF=y
+
+# ---- LittleFS on the "data" partition (esp_littlefs / joltwallet component) -------
+CONFIG_LITTLEFS_MAX_PARTITIONS=1
+CONFIG_LITTLEFS_PAGE_SIZE=256
+
+# ---- Sentinel app options (see main/Kconfig.projbuild) ----------------------------
+CONFIG_SENTINEL_USE_TFLM=n               # off by default: hand-written sentinel_int8
+                                           # path is the one actually exercised on host
+                                           # here; TFLM path is compiled-only (see
+                                           # components/tflm_wrapper/README notes) --
+                                           # set y once esp-tflite-micro is vendored.
+CONFIG_SENTINEL_DEMO_REPLAY=n             # replay.c demo-mode banner (design 04 §6)
+CONFIG_SENTINEL_MAINS_SENSE_GPIO=16
+CONFIG_SENTINEL_HEARTBEAT_GPIO=4
+CONFIG_SENTINEL_RELAY_COIL_T1_GPIO=5
+CONFIG_SENTINEL_RELAY_COIL_T2_GPIO=6
+CONFIG_SENTINEL_RELAY_COIL_T3_GPIO=7
+CONFIG_SENTINEL_RELAY_COIL_MED_GPIO=15
+
+# =====================================================================================
+# Secure Boot V2 + Flash Encryption -- COMMENTED OUT (this prototype was never flashed;
+# enabling these on a board with no verified provisioning flow, key backup, or eFuse
+# burn plan is a one-way trip -- see 09-Security-OTA-and-Health-Log.md and the eFuse
+# warnings in `idf.py menuconfig`). To actually enable on real hardware:
+#
+#   CONFIG_SECURE_BOOT=y
+#   CONFIG_SECURE_BOOT_V2_ENABLED=y
+#   CONFIG_SECURE_SIGNED_APPS_ECDSA_SCHEME=y     # matches the P-256 key already used by
+#                                                  # healthlog (ATECC608 in production)
+#   CONFIG_SECURE_BOOT_BUILD_SIGNED_BINARIES=y
+#   CONFIG_SECURE_FLASH_ENC_ENABLED=y
+#   CONFIG_SECURE_FLASH_ENCRYPTION_MODE_RELEASE=y # only after provisioning is verified
+#                                                  # in DEVELOPMENT mode first
+#
+# Order of operations for real bring-up (do not skip steps):
+#   1. idf.py menuconfig -> Security features -> enable Secure Boot v2, generate/import
+#      the ECDSA-P256 signing key (`espsecure.py generate_signing_key`), keep the
+#      private key OFF the device (CI/HSM only).
+#   2. First flash in DEVELOPMENT mode (CONFIG_SECURE_FLASH_ENCRYPTION_MODE_DEVELOPMENT)
+#      on a bench unit; confirm OTA + rollback + coredump still work.
+#   3. Only then re-flash in RELEASE mode on production units; RELEASE mode permanently
+#      burns eFuses (JTAG disable, re-flash lockout) -- irreversible per device.
+#   4. Register each device's public key / pseudonym with the fleet backend (08 §A4)
+#      before RELEASE-mode flashing, since a bricked disabled-JTAG unit cannot be
+#      recovered if key registration was missed.
+# =====================================================================================

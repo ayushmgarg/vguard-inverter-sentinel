@@ -1,0 +1,19 @@
+# Shared C/Python parity vectors for the charger UART frame codec
+# (design 03 Sec.1.2). Both test_frames_host.c (--vectors mode) and
+# tests/test_charger.py encode these exact commands and must produce
+# byte-identical frames. One command per line; '#' starts a comment.
+SET_FLOAT 2270
+SET_ABSORPTION 2435 180
+SET_EQUALISE 2540 150 1
+SET_EQUALISE 2540 0 0
+SET_CURRENT_LIMIT_PCT 76
+SET_CURRENT_LIMIT_PCT 0
+SET_TEMP_COMP -4000
+GET_STATUS
+HEARTBEAT 305419896
+HEARTBEAT 0
+NACK 2
+# a float setpoint that lands exactly on a byte needing stuffing (0xAA * 6 / 1000... use
+# a value chosen so the CRC/payload bytes are likely to hit 0xAA/0x55/0x7D at least once
+# across this vector set, exercising the stuffing path in the parity check too).
+SET_FLOAT 43690

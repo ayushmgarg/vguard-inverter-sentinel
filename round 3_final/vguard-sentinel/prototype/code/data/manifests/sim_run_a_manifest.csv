@@ -1,0 +1,9 @@
+battery_id,chemistry,n_cycles,capacity_bol,capacity_eol,source_file,sha256
+0,synthetic-tubular-lead-acid (sim/),21,98.58366,92.96294,data/features_sim.csv,9e98505c5c34b2e6aa82782afbdf5bfce0f20b0eb9141cc9f0e8b79d7ee45fb2
+3,synthetic-tubular-lead-acid (sim/),21,100.0,70.384735,data/features_sim.csv,9e98505c5c34b2e6aa82782afbdf5bfce0f20b0eb9141cc9f0e8b79d7ee45fb2
+5,synthetic-tubular-lead-acid (sim/),31,100.0,87.72983,data/features_sim.csv,9e98505c5c34b2e6aa82782afbdf5bfce0f20b0eb9141cc9f0e8b79d7ee45fb2
+2,synthetic-tubular-lead-acid (sim/),32,99.72103,90.83756,data/features_sim.csv,9e98505c5c34b2e6aa82782afbdf5bfce0f20b0eb9141cc9f0e8b79d7ee45fb2
+7,synthetic-tubular-lead-acid (sim/),31,100.0,83.117355,data/features_sim.csv,9e98505c5c34b2e6aa82782afbdf5bfce0f20b0eb9141cc9f0e8b79d7ee45fb2
+1,synthetic-tubular-lead-acid (sim/),25,100.0,93.04757,data/features_sim.csv,9e98505c5c34b2e6aa82782afbdf5bfce0f20b0eb9141cc9f0e8b79d7ee45fb2
+6,synthetic-tubular-lead-acid (sim/),36,100.0,61.124126,data/features_sim.csv,9e98505c5c34b2e6aa82782afbdf5bfce0f20b0eb9141cc9f0e8b79d7ee45fb2
+4,synthetic-tubular-lead-acid (sim/),25,100.0,92.82248,data/features_sim.csv,9e98505c5c34b2e6aa82782afbdf5bfce0f20b0eb9141cc9f0e8b79d7ee45fb2

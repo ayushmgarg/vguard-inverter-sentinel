@@ -1,0 +1,112 @@
+<title>Sentinel Demo</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/static/style.css">
+
+<!--
+  V-Guard Sentinel — Tier 0 bench demo dashboard (module G).
+  Polls GET /api/state once a second. Chart.js is loaded from cdnjs for the
+  SoC gauge only; every panel still renders correctly without it (CSS bar +
+  plain numbers), per the offline-graceful-fallback requirement.
+-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"
+        onerror="window.__chartLoadFailed = true"></script>
+
+<header>
+  <h1>V-Guard Sentinel — Demo Dashboard</h1>
+  <span id="conn-status" class="bad">connecting…</span>
+</header>
+
+<div class="grid">
+
+  <section class="panel" id="panel-battery">
+    <h2>Battery</h2>
+    <div id="soc-canvas-wrap"><canvas id="soc-canvas" width="220" height="220"></canvas></div>
+    <div id="chart-fallback-note" hidden>Chart.js unavailable (offline) — showing numeric readout only.</div>
+    <div class="soc-bar-track">
+      <div class="soc-bar-fill" id="soc-bar-fill" style="width:0%"></div>
+      <div class="soc-bar-raw" id="soc-bar-raw" style="left:0%"></div>
+    </div>
+    <div class="sub-number">Fused SoC: <span id="soc-fused">--</span>% &nbsp;|&nbsp; Raw coulomb: <span id="soc-raw">--</span>%</div>
+    <div class="readout-grid">
+      <div><span class="label">V:</span> <span id="batt-v">--</span> V</div>
+      <div><span class="label">I:</span> <span id="batt-i">--</span> A</div>
+      <div><span class="label">T:</span> <span id="batt-t">--</span> °C</div>
+      <div><span class="label">R0:</span> <span id="batt-r0">--</span> mΩ</div>
+      <div><span class="label">SoH(R):</span> <span id="batt-sohr">--</span>%</div>
+    </div>
+  </section>
+
+  <section class="panel" id="panel-backup">
+    <h2>Backup time</h2>
+    <div class="big-number"><span id="backup-min">--</span> <span class="sub-number">min</span></div>
+    <div class="reasons"><ul id="autopilot-reasons"></ul></div>
+  </section>
+
+  <section class="panel" id="panel-outage">
+    <h2>Outage detection</h2>
+    <div><span id="grid-badge" class="badge grid-up">GRID UP</span> <span class="muted">since <span id="grid-since">0</span> s</span></div>
+    <div class="votes">
+      <span class="vote-dot no" id="vote-rms">RMS</span>
+      <span class="vote-dot no" id="vote-mode_pin">Mode pin</span>
+      <span class="vote-dot no" id="vote-discharge">Discharge</span>
+    </div>
+    <div class="muted">2-of-3 votes shown in red when they indicate an outage.</div>
+  </section>
+
+  <section class="panel" id="panel-autopilot">
+    <h2>Autopilot — tier channels</h2>
+    <div id="channels-list"></div>
+  </section>
+
+  <section class="panel" id="panel-soh">
+    <h2>SoH / RUL</h2>
+    <span class="grade-tag" id="grade-tag">--</span>
+    <div class="soh-band" id="soh-band">--</div>
+    <div class="sub-number" id="rul-text">--</div>
+    <div class="muted">n_weeks=<span id="n-weeks">--</span>, confidence=<span id="confidence">--</span></div>
+    <div class="replay-banner" id="replay-banner" hidden></div>
+  </section>
+
+  <section class="panel" id="panel-coach">
+    <h2>Coach — appliances</h2>
+    <div id="appliances-list"></div>
+    <h2 style="margin-top:1rem">What just turned on?</h2>
+    <div id="events-list"></div>
+    <div id="clusters-list"></div>
+  </section>
+
+  <section class="panel" id="panel-pq">
+    <h2>Power quality</h2>
+    <div id="pq-events-list"></div>
+    <h2 style="margin-top:1rem">This month</h2>
+    <div class="rollup-grid" id="rollup-grid"></div>
+  </section>
+
+  <section class="panel" id="panel-healthlog">
+    <h2>Health log</h2>
+    <div>Records: <span id="hl-n">--</span></div>
+    <div>Last verify: <span id="hl-verify">not yet run</span></div>
+    <button id="verify-btn">Verify log</button>
+  </section>
+
+  <section class="panel" id="demo-controls">
+    <h2>Finale demo controls <span class="muted">(fixture provider only)</span></h2>
+    <div class="row">
+      <button class="secondary" id="btn-outage">Flip MCB (outage)</button>
+      <button class="secondary" id="btn-restore">Restore mains</button>
+      <button class="secondary" id="btn-reset-mcu">Reset MCU (fail-safe)</button>
+      <button class="secondary" id="btn-replay">Advance SoH replay</button>
+    </div>
+    <div class="row">
+      <label for="force-soc-range">Force SoC:</label>
+      <input type="range" id="force-soc-range" min="0" max="100" value="62">
+      <span id="force-soc-value">62%</span>
+      <button class="secondary" id="btn-force-soc">Apply</button>
+    </div>
+    <div class="muted" id="demo-note"></div>
+  </section>
+
+</div>
+
+<script src="/static/app.js"></script>

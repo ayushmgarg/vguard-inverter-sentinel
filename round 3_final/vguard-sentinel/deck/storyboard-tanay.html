@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>V-Guard Sentinel — simulation-aligned storyboard</title>
+  <style>
+    :root { --black:#000104; --ink:#221e1f; --gold:#fdc300; --orange:#f39200; --light:#f3efef; --grey:#6c757d; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#1a1a1a; color:var(--ink); font-family:Arial,sans-serif; }
+    .deck { width:1280px; margin:0 auto; }
+    .slide { position:relative; width:1280px; height:720px; padding:48px 60px 42px; background:#fff; overflow:hidden; page-break-after:always; }
+    .slide.dark { background:var(--black); color:#fff; }
+    .slide::before { content:""; position:absolute; left:0; right:0; top:0; height:10px; background:var(--gold); }
+    .slide.dark::before { display:none; }
+    .kicker { color:var(--grey); font-size:18px; font-style:italic; margin:4px 0 20px 30px; }
+    .dark .kicker { color:var(--gold); font-style:normal; }
+    h1 { margin:0 0 12px 30px; font-size:40px; line-height:1.03; letter-spacing:-.5px; }
+    h2 { margin:0 0 8px; font-size:26px; }
+    h3 { margin:0 0 10px; font-size:20px; }
+    p { margin:8px 0; font-size:18px; line-height:1.28; }
+    ul { margin:0; padding-left:28px; font-size:18px; line-height:1.42; }
+    li { margin:8px 0; }
+    .accent { color:var(--orange); font-weight:bold; }
+    .simulation { position:absolute; right:60px; top:20px; z-index:5; padding:7px 13px; border:2px solid var(--orange); border-radius:18px; color:var(--orange); font-size:12px; font-weight:bold; letter-spacing:.6px; }
+    .dark .simulation { border-color:var(--gold); color:var(--gold); }
+    .footer { position:absolute; left:60px; right:60px; bottom:12px; border-top:1px solid #ddd; padding-top:6px; font-size:11px; color:var(--grey); }
+    .dark .footer { border-color:#444; color:#bbb; }
+    .two { display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:start; }
+    .three { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .four { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+    .card { background:var(--light); border-left:8px solid var(--orange); padding:18px 18px 16px; min-height:150px; }
+    .card.gold { background:var(--gold); }
+    .card p { font-size:15px; }
+    .metric { padding:14px 18px; border-left:7px solid var(--orange); background:var(--light); margin:10px 0; }
+    .metric strong { display:inline-block; width:220px; font-size:18px; }
+    .metric .value { color:var(--orange); font-weight:bold; font-size:18px; }
+    .metric small { color:var(--grey); font-size:15px; margin-left:15px; }
+    .asset { display:block; width:100%; max-height:410px; object-fit:contain; margin:10px auto; }
+    .asset.half { width:48%; max-height:280px; }
+    .title h1 { margin:130px 0 12px; color:var(--gold); font-size:72px; }
+    .title .lead { width:820px; font-size:28px; line-height:1.22; }
+    .title .meta { position:absolute; left:60px; bottom:54px; font-size:17px; }
+    .title .rule { position:absolute; left:0; right:0; bottom:104px; height:8px; background:var(--gold); }
+    .timeline { display:flex; gap:12px; align-items:stretch; margin-top:25px; }
+    .timeline .step { flex:1; padding:18px 14px; background:var(--light); border-top:8px solid var(--orange); font-size:16px; line-height:1.25; }
+    .timeline .step strong { display:block; font-size:22px; color:var(--orange); margin-bottom:8px; }
+    .cluster { display:flex; justify-content:space-around; align-items:center; margin:24px 0; }
+    .home { width:140px; height:100px; border:4px solid var(--orange); border-radius:12px 12px 6px 6px; position:relative; background:var(--light); text-align:center; padding-top:38px; font-weight:bold; }
+    .home::before { content:""; position:absolute; left:27px; top:-34px; width:80px; height:80px; transform:rotate(45deg); border-left:4px solid var(--orange); border-top:4px solid var(--orange); background:var(--light); z-index:0; }
+    .home span { position:relative; z-index:1; }
+    .cloud { padding:25px 30px; background:var(--gold); border-radius:40px; font-weight:bold; text-align:center; }
+    .arrow { font-size:34px; color:var(--orange); }
+    .note { padding:12px 16px; background:#fff8dc; border:1px solid var(--gold); font-size:16px; line-height:1.3; }
+    .source { font-size:12px; color:var(--grey); }
+  </style>
+</head>
+<body>
+<div class="deck" data-title="V-Guard Sentinel">
+
+  <div class="slide dark title" data-kind="title">
+    <div class="simulation">COMPUTER SIMULATION · NO PRACTICAL EXPERIMENTS</div>
+    <h1>V-Guard Sentinel</h1>
+    <p class="lead">A simulation-backed design for an offline AI core that gives the home inverter a battery-health estimate, safe load control, appliance insight, and a path to fleet learning.</p>
+    <p class="meta">Team Codey Tingle (TI3271) · Ayush Manoj Garg · Eshan Shukla · Tanay Chaplot<br>Report ↔ prototype reconciliation · September 2026</p>
+    <div class="rule"></div>
+  </div>
+
+  <div class="slide" data-kind="image-bottom">
+    <div class="simulation">DESIGN CONTEXT</div>
+    <h1>The battery is the silent point of failure</h1>
+    <div class="kicker">The report establishes the opportunity; the prototype tests the logic with simulated data.</div>
+    <div class="two"><div><ul><li><b>Problem:</b> an inverter can switch quickly but usually cannot estimate how its battery is ageing.</li><li><b>Cost:</b> an unexpected battery failure interrupts food storage, work, study, connectivity, and medical loads.</li><li><b>Opportunity:</b> turn existing voltage, current, temperature, and load signals into an offline decision layer.</li></ul></div><div class="note"><b>Evidence boundary</b><br>The report’s market, outage, and lifetime figures are design inputs. The repository does not claim field validation or measured product savings yet.</div></div>
+    <div class="footer">Source: detailed report §§2–3 · repository design register and prototype status crosswalk</div>
+  </div>
+
+  <div class="slide" data-kind="image-bottom">
+    <div class="simulation">SYSTEM BOUNDARY</div>
+    <h1>What Sentinel is — and what it is not</h1>
+    <div class="kicker">A proposed signal-and-control module beside an inverter, with optional cloud services.</div>
+    <img class="asset" src="assets/placement.png" alt="Sentinel placement architecture">
+    <p class="note"><b>Retrofit reality:</b> the battery current stays in an external shunt or Hall sensor. The module reads a signal, watches inverter AC output through a metering path, and drives external contactors. The battery and inverter have not been physically modified or tested in this project.</p>
+  </div>
+
+  <div class="slide" data-kind="cards">
+    <div class="simulation">SIMULATED ARCHITECTURE</div>
+    <h1>Four engines, one proposed core</h1>
+    <div class="kicker">The prototype implements host-side algorithms and replay paths; hardware integration remains a future gate.</div>
+    <div class="four"><div class="card gold"><h3>1 · Battery health</h3><p>EKF plus a small int8 CNN estimates SoH/RUL bands from synthetic cycle features. A warning is a window, never a date.</p></div><div class="card"><h3>2 · Autopilot</h3><p>Deterministic tiers and hysteresis protect essentials. The current prototype evaluates the controller in scripted scenarios.</p></div><div class="card"><h3>3 · Energy Coach / Grid Shield</h3><p>NILM and power-quality code consume synthetic AC streams. A metering AFE is designed but not bench-validated.</p></div><div class="card"><h3>4 · Fleet learning</h3><p>Central-learning telemetry is designed. Flower/Secure Aggregation/DP are specified but deliberately deferred from this prototype.</p></div></div>
+  </div>
+
+  <div class="slide" data-kind="image-bottom">
+    <div class="simulation">HOST-SIDE MODEL PIPELINE</div>
+    <h1>Engine 1 · From simulated signals to a health band</h1>
+    <div class="kicker">Physics first, learning second.</div>
+    <img class="asset" src="assets/engine1_flow.png" alt="Battery health flow">
+    <ul><li><b>Inputs:</b> simulated 1 Hz I/V/T streams reduced to 14 dynamic and 6 static features per cycle.</li><li><b>Model:</b> 1-D CNN, three seeds, quantile heads, conformal calibration, and a grade state machine.</li><li><b>Pending:</b> real tubular-battery ageing labels and ESP32-S3 execution.</li></ul>
+  </div>
+
+  <div class="slide" data-kind="metrics">
+    <div class="simulation">SYNTHETIC DATA ONLY</div>
+    <h1>Engine 1 · What the current artifacts show</h1>
+    <div class="kicker">These are computer-simulation results, not practical experiments or field accuracy.</div>
+    <img class="asset half" src="assets/soh_band.png" alt="Synthetic SoH prediction band">
+    <div class="metric"><strong>SoH MAE / RMSE</strong><span class="value">8.2 / 9.6 percentage points</span><small>16 simulated batteries; 3 final-test batteries</small></div>
+    <div class="metric"><strong>80% coverage</strong><span class="value">0.66 → 0.99 after conformal</span><small>post-calibration band is very wide: MPIW 34 points</small></div>
+    <div class="metric"><strong>RUL window hit rate</strong><span class="value">1.00 (n = 3)</span><small>too small to support a product claim</small></div>
+    <div class="metric"><strong>int8 delta</strong><span class="value">+0.01 point MAE</span><small>host/reference comparison; silicon not tested</small></div>
+  </div>
+
+  <div class="slide" data-kind="two-image">
+    <div class="simulation">CONTROLLER SIMULATION</div>
+    <h1>Engine 2 · Autopilot protects essentials</h1>
+    <div class="kicker">The safety logic is deterministic; the load/outage tables are transparent and replayable.</div>
+    <div class="two"><div><img class="asset" src="assets/autopilot_ladder.png" alt="Autopilot thresholds"><ul><li>T1 essentials stay on.</li><li>T2 defer at 55%; restore at 70%.</li><li>T3 shed at 40%; restore at 55%.</li><li>Hysteresis and dwell timers prevent chatter.</li></ul></div><div><img class="asset" src="assets/failsafe_flow.png" alt="Fail-safe flow"><p class="note"><b>Simulation status:</b> Python/C parity and scripted scenarios are implemented. Contactors, watchdog hardware, and a real inverter have not been tested.</p></div></div>
+  </div>
+
+  <div class="slide" data-kind="two-image">
+    <div class="simulation">SYNTHETIC STREAMS</div>
+    <h1>Engine 3 · Coach and Grid Shield</h1>
+    <div class="kicker">The repository corrects an important report gap: NILM needs AC output metering, not only battery DC current.</div>
+    <div class="two"><div><img class="asset" src="assets/nilm_events.png" alt="Synthetic NILM events"><ul><li>Event detector and appliance matching run on simulated P/Q streams.</li><li>Scope is directional: large loads and per-home calibration.</li></ul></div><div><img class="asset" src="assets/pq_dip.png" alt="Synthetic power quality dip"><ul><li>Half-cycle RMS and FFT logic classify simulated sags, swells, and THD.</li><li>AFE, CTs, reference meter, and live AC waveform capture remain unbuilt.</li></ul></div></div>
+  </div>
+
+  <div class="slide" data-kind="image-side">
+    <div class="simulation">DESIGN + COST MODEL</div>
+    <h1>Two SKUs keep the claims honest</h1>
+    <div class="kicker">The report’s original universal adaptive-charging claim was narrowed in the prototype design register.</div>
+    <div class="two"><div><img class="asset" src="assets/cost_tiers.png" alt="Cost tiers"></div><div><div class="card gold"><h3>Embedded</h3><p>Designed for a compatible new inverter. Charger control and any life-extension claim belong here, subject to ageing-campaign evidence.</p></div><div class="card"><h3>Retrofit</h3><p>External shunt, AC metering path, contactors, and advisory charging. It cannot command an unknown analogue charger.</p></div><p class="note">The revised design adds the AFE, RTC, secure element, DAC, and supervisory timer omitted from the report’s first BOM.</p></div></div>
+  </div>
+
+  <div class="slide" data-kind="bullets">
+    <div class="simulation">REPOSITORY IMPLEMENTATION</div>
+    <h1>What is implemented in software</h1>
+    <div class="kicker">A runnable host prototype, not a deployed product.</div>
+    <div class="two"><div><ul><li>1 Hz synthetic tubular duty-cycle simulator and feature extraction.</li><li>EKF, autopilot, NILM, PQ, charging policy, and health-log reference implementations.</li><li>Three-seed int8/TFLite export artifacts and a C golden self-test.</li><li>Dashboard fixture and file providers with provenance labels.</li></ul></div><div><ul><li>Host firmware links the real C control modules against replayed CSV data.</li><li>NASA/CALCE loaders and Stage A/B/C scaffolding exist, but real-source training is incomplete.</li><li>Hardware tests, ESP-IDF build, sensor drivers, and ATECC608 provisioning remain open.</li></ul><p class="note"><b>Verification note:</b> this deck reports repository artifacts and documented runs. It does not present them as practical experiments.</p></div></div>
+  </div>
+
+  <div class="slide" data-kind="image-bottom">
+    <div class="simulation">COMPUTER-ONLY WALKTHROUGH</div>
+    <h1>How one simulated outage moves through the system</h1>
+    <div class="kicker">This is the main prototype story: the same event flows from generated data to a dashboard decision.</div>
+    <img class="asset" src="assets/demo_flow.png" alt="Simulation walkthrough">
+    <div class="timeline"><div class="step"><strong>1</strong>simulator emits I/V/T, grid, and load</div><div class="step"><strong>2</strong>outage vote changes state</div><div class="step"><strong>3</strong>autopilot sheds T3 in the replay</div><div class="step"><strong>4</strong>model produces a synthetic health band</div><div class="step"><strong>5</strong>dashboard labels source and age</div></div>
+  </div>
+
+  <div class="slide" data-kind="cluster">
+    <div class="simulation">FLEET SIMULATION · NOT DEPLOYED HOMES</div>
+    <h1>Cluster-of-homes view: central learning path</h1>
+    <div class="kicker">A conceptual fleet view for the prototype story — these homes are simulated clients, not installed units.</div>
+    <div class="cluster"><div class="home"><span>Home A<br><small>synthetic duty</small></span></div><div class="home"><span>Home B<br><small>hot condition</small></span></div><div class="home"><span>Home C<br><small>partial SoC</small></span></div><div class="arrow">→</div><div class="cloud">V-Guard central training<br><small>consented, pseudonymised summaries</small></div><div class="arrow">→</div><div class="home"><span>Model update<br><small>replay next run</small></span></div></div>
+    <div class="three"><div class="card"><h3>What is simulated</h3><p>Different household duty cycles, temperatures, loads, and battery trajectories.</p></div><div class="card"><h3>What is not claimed</h3><p>No live homes, no field telemetry, no deployed fleet, and no measured privacy budget.</p></div><div class="card gold"><h3>Federated status</h3><p>Flower, Secure Aggregation, and DP-FTRL are designed but deliberately deferred from this prototype.</p></div></div>
+  </div>
+
+  <div class="slide" data-kind="image-bottom">
+    <div class="simulation">FIRMWARE DESIGN; HOST-ONLY EXECUTION</div>
+    <h1>Self-contained by construction — on paper and in replay</h1>
+    <div class="kicker">No cloud is required by the algorithm path; the physical firmware target is still unverified.</div>
+    <img class="asset" src="assets/firmware_tasks.png" alt="Firmware task architecture">
+    <p class="note"><b>Current evidence:</b> host C build, replayed CSV, int8 golden self-test, and dashboard JSON. <b>Pending:</b> ESP-IDF compilation, flashing, real-time timing, power measurement, sensor drivers, secure boot, and hardware fault injection.</p>
+  </div>
+
+  <div class="slide" data-kind="cards">
+    <div class="simulation">REPORT ↔ PROTOTYPE RECONCILIATION</div>
+    <h1>Corrections made after engineering review</h1>
+    <div class="kicker">The prototype documentation is more conservative than the frozen submission report.</div>
+    <div class="three"><div class="card gold"><h3>OCV correction</h3><p>Float voltage is not open-circuit voltage. Use charge-current taper and true charger-off rest.</p></div><div class="card"><h3>Signal boundary</h3><p>A battery shunt cannot disaggregate AC appliances. Add an AC metering front end and CT path.</p></div><div class="card"><h3>Charging boundary</h3><p>Adaptive charging is embedded-SKU only; retrofit is advisory unless a verified charger interface exists.</p></div></div>
+    <div class="three" style="margin-top:22px"><div class="card"><h3>Model boundary</h3><p>Real tubular accuracy waits for the ageing campaign. Synthetic metrics are pipeline evidence only.</p></div><div class="card"><h3>Federated boundary</h3><p>Central summaries are the current path. Federated learning is specified, not demonstrated.</p></div><div class="card"><h3>Terminology</h3><p>ESP32-S3 vector/SIMD extensions and milliamp-class draw replace “neural accelerator” and “microamp” wording.</p></div></div>
+  </div>
+
+  <div class="slide" data-kind="cards">
+    <div class="simulation">NEXT VALIDATION GATES</div>
+    <h1>What must happen before product claims</h1>
+    <div class="kicker">The roadmap is deliberately gated by evidence rather than calendar promises.</div>
+    <div class="three"><div class="card gold"><h3>Gate 1 · Tubular data</h3><p>Age 24–36 representative batteries across temperature, depth of discharge, and charge regime. Establish real SoH labels and estimator tables.</p></div><div class="card"><h3>Gate 2 · Bench hardware</h3><p>Build the sensor/AFE/contactor path, compile ESP-IDF, flash the ESP32-S3, and measure timing, draw, fail-safe behaviour, and PQ/NILM against reference instruments.</p></div><div class="card"><h3>Gate 3 · Field pilot</h3><p>Run monitored units, validate warnings against actual replacements, and only then quantify life extension, backup gains, warranty savings, or fleet learning.</p></div></div>
+    <p class="note" style="margin-top:28px"><b>Decision rule:</b> no real-battery accuracy number, life-extension percentage, or installed-fleet claim should appear without the corresponding gate evidence.</p>
+  </div>
+
+  <div class="slide dark title" data-kind="title">
+    <div class="simulation">FINAL STATUS · COMPUTER SIMULATION</div>
+    <h1 style="font-size:52px">A credible prototype starts by saying exactly what it has not tested.</h1>
+    <p class="lead" style="font-size:24px">The repository demonstrates the algorithms, replay path, host firmware, dashboard, and evidence boundaries. Real batteries, real homes, real ESP32 hardware, and field experiments are the next gates.</p>
+    <p class="meta">V-Guard Sentinel · Team Codey Tingle (TI3271)<br>github.com/epshukla/vguard-sentinel</p>
+    <div class="rule"></div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+menu "V-Guard Sentinel"
+
+    config SENTINEL_USE_TFLM
+        bool "Use esp-tflite-micro instead of the hand-written int8 path"
+        default n
+        help
+            When n (default), main.c calls components/sentinel_int8's hand-written
+            C99 int8 inference (the path actually built and run on host in this
+            repo). When y, components/tflm_wrapper is compiled and linked instead,
+            pulling in the espressif/esp-tflite-micro managed component -- see
+            components/tflm_wrapper/README.md ("compiled only in concept" here,
+            never build-verified in this environment).
+
+    config SENTINEL_DEMO_REPLAY
+        bool "Enable replay.c demo-mode banner"
+        default n
+        help
+            Feeds ml_infer from a stored feature trajectory file instead of real
+            cycles (design 04 §6), for retail-demo use. Sets a replay banner flag
+            surfaced in state_json.c's "model.replay_banner" field.
+
+    config SENTINEL_MAINS_SENSE_GPIO
+        int "Mains-present sense input (opto tap or AMC1311 comparator output)"
+        default 16
+        help
+            Digital "mains present" input -- 03-Parts-Placement-and-Roles.md C12
+            (PC817 optocoupler) or a comparator-conditioned tap off the AMC1311
+            isolated AC sense (C5). Feeds one leg of the outage 2-of-3 vote
+            (CONTRACTS §5, ap_outage_step()) alongside the AC RMS measurement and
+            battery discharge-current sign. This prototype has no AMC1311 RMS
+            path wired (see README honest limits) -- main.c uses this same digital
+            pin as a coarse stand-in for the "ADC RMS" leg of the vote too, not
+            just the mode-pin leg, until that ADC path exists.
+
+    config SENTINEL_HEARTBEAT_GPIO
+        int "Heartbeat GPIO (external supervisory timer feed)"
+        default 4
+        help
+            Toggled by the heartbeat task only if the task watchdog is healthy
+            (design 04 §2, 03-Parts-Placement-and-Roles.md C8). Any firmware hang
+            stops this toggle, which drops all relay coils (fail-safe = loads on).
+
+    config SENTINEL_RELAY_COIL_T1_GPIO
+        int "Relay coil GPIO: T1 essentials"
+        default 5
+
+    config SENTINEL_RELAY_COIL_T2_GPIO
+        int "Relay coil GPIO: T2"
+        default 6
+
+    config SENTINEL_RELAY_COIL_T3_GPIO
+        int "Relay coil GPIO: T3"
+        default 7
+
+    config SENTINEL_RELAY_COIL_MED_GPIO
+        int "Relay coil GPIO: medical/never-shed (hw-locked T1)"
+        default 15
+
+endmenu

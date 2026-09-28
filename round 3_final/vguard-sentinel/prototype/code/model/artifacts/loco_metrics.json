@@ -1,0 +1,23 @@
+[
+  {
+    "held_out_condition": "hot",
+    "n_train": 3094,
+    "n_val": 369,
+    "val_pinball_total": 0.3321763873100281,
+    "seconds": 7.147986888885498
+  },
+  {
+    "held_out_condition": "nominal",
+    "n_train": 978,
+    "n_val": 2485,
+    "val_pinball_total": 1.2777726650238037,
+    "seconds": 3.792536735534668
+  },
+  {
+    "held_out_condition": "psoc",
+    "n_train": 2854,
+    "n_val": 609,
+    "val_pinball_total": 0.4181561768054962,
+    "seconds": 8.275911092758179
+  }
+]

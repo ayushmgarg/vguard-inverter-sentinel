@@ -1,0 +1,23 @@
+# legacy build artefacts are not part of this repo
+docs/
+# regenerable 1 Hz simulation data (~2.3 GB)
+prototype/code/data/sim_1hz*/
+# build outputs
+**/__pycache__/
+*.pyc
+*.o
+*.a
+*.so
+prototype/code/*/test_*_host
+prototype/code/ekf/test_ekf_host
+prototype/code/autopilot/test_autopilot_host
+prototype/code/nilm/event_detector_main
+prototype/code/pq/pq_main
+prototype/code/healthlog/test_healthlog_host
+prototype/code/firmware/host/sentinel_host_sim
+prototype/code/firmware/host/state.json
+prototype/code/*.bin
+prototype/code/healthlog/*.bin
+.pytest_cache/
+# local agent/editor state
+.claude/

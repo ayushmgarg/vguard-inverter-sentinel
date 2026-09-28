@@ -1,1 +1,7 @@
-.claude/
+# dot folders (editor / agent / tool state)
+.*/
+!.gitignore
+# dependencies and build output
+node_modules/
+__pycache__/
+*.pyc

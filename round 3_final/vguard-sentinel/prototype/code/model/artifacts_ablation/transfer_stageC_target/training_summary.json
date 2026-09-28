@@ -1,0 +1,29 @@
+{
+  "stage": "C",
+  "data": "data/features_sim_b.csv",
+  "init": "model/artifacts_ablation/transfer_stageA_source",
+  "freeze_conv": true,
+  "l2sp_beta": 0.001,
+  "n_windows_pool": 158,
+  "n_train_pool_batteries": 4,
+  "n_calib_batteries": 2,
+  "n_test_batteries": 2,
+  "seed_results": [
+    {
+      "seed": 0,
+      "best_val_pinball_total": 0.832746148109436,
+      "init_from": "model/artifacts_ablation/transfer_stageA_source/seed0.pt"
+    },
+    {
+      "seed": 1,
+      "best_val_pinball_total": 0.8944076895713806,
+      "init_from": "model/artifacts_ablation/transfer_stageA_source/seed1.pt"
+    },
+    {
+      "seed": 2,
+      "best_val_pinball_total": 1.0561511516571045,
+      "init_from": "model/artifacts_ablation/transfer_stageA_source/seed2.pt"
+    }
+  ],
+  "wall_seconds": 3.1627821922302246
+}

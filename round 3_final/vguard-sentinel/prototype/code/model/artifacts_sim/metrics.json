@@ -1,0 +1,62 @@
+{
+  "label": "float (PyTorch)",
+  "n_calib_windows": 104,
+  "n_calib_batteries": 3,
+  "conformal_offsets": {
+    "c_lo_soh": 13.133037567138672,
+    "c_hi_soh": 0.0,
+    "c_lo_rul": 0.1292993664741516,
+    "c_hi_rul": 0.0
+  },
+  "soh_mae_pt": 8.24490737915039,
+  "soh_rmse_pt": 9.606389999389648,
+  "picp_80": {
+    "before": 0.6634615384615384,
+    "after": 0.9903846153846154,
+    "pice_before_pt": 13.65384615384616,
+    "pice_after_pt": 19.038461538461537,
+    "mpiw_before_pt": 21.06594467163086,
+    "mpiw_after_pt": 34.19898223876953
+  },
+  "picp_50_approx": {
+    "after": 0.5288461538461539,
+    "pice_after_pt": 2.8846153846153855,
+    "mpiw_after_pt": 17.998762130737305,
+    "note": "P25/P75 approximated from P10/P50/P90 (Z50/Z80 scaling) -- the architecture's quantile heads are fixed at tau=.1/.5/.9."
+  },
+  "rul_nmpiw": 17.978084564208984,
+  "rul_relative_error_at_checkpoints": {
+    "95.0": {
+      "mean_rel_err": 1.7819333831627613,
+      "median_rel_err": 0.7272126728899161,
+      "n": 3
+    },
+    "90.0": {
+      "mean_rel_err": 1.8217662091592615,
+      "median_rel_err": 0.6190369102204192,
+      "n": 3
+    },
+    "85.0": {
+      "mean_rel_err": 3.9212882789133694,
+      "median_rel_err": 1.2679104298102892,
+      "n": 3
+    }
+  },
+  "rul_window_hit_rate": 1.0,
+  "n_checkpoint_pairs": 9,
+  "warning_lead_time": {
+    "median_lead_weeks": 4.444348102185211,
+    "p10_lead_weeks": 1.4053862982907648,
+    "n_batteries": 3,
+    "n_censored_no_eol": 0,
+    "n_with_replace_grade": 3,
+    "false_alarm_rate": 0.0,
+    "miss_rate": 0.3333333333333333
+  },
+  "evaluation_set": "independent final-test batteries ['0_b', '3_b', '6_a'] (never used for training, selection or calibration)",
+  "units": {
+    "soh": "percentage points of rated capacity",
+    "rul": "equivalent full cycles (EFC) to 80 % SoH; weeks via usage-rate EWMA",
+    "time": "days from t_end_s timestamps when present, else cycle index"
+  }
+}

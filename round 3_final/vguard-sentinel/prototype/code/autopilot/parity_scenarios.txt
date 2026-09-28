@@ -1,0 +1,58 @@
+# Shared scenario table for the C-vs-Python cross-language parity check
+# (tests/test_autopilot.py::test_c_matches_python_parity, autopilot/test_autopilot_host.c
+# `--parity` mode). Both replay this exact sequence through ap_evaluate() /
+# controller.evaluate() starting from a fresh ap_init()/init_state() and must
+# produce identical channel_state[4] + mode at every STEP line.
+#
+# CFG line (starts a new run, re-initialises state):
+#   CFG t0 hw0 t1 hw1 t2 hw2 t3 hw3 configured charger_commandable c_rated_ah v_nominal peukert_n
+#     t* = tier (1=T1 2=T2 3=T3), hw* = hw_locked_t1 (0/1), configured (0/1), charger_commandable (0/1)
+# STEP line (one ap_evaluate call):
+#   STEP t soc soh grid_ok load_w hour dow temp_c i_fcst fcst_t1_wh outage_prob outage_conf actual_decline forecast_decline override_req override_timeout_s override_clear
+#     grid_ok (0/1); outage_prob/outage_conf: -1 means "no forecast this cycle"
+#     actual_decline/forecast_decline: -1e9 means "no decline-rate reading this cycle"
+#     override_req: -1 means none; override_timeout_s: -1 means "use config default"; override_clear (0/1)
+
+# Run 1: plain SoC-ladder drain (T2 ch1, T3 ch2/ch3), dwell blocks then allows shed, then restore
+CFG 1 0 2 0 3 0 3 0 1 0 150 12 1.25
+STEP 0 0.90 0.95 1 100 12 2 25 5 50 -1 -1 -1e9 -1e9 -1 -1 0
+STEP 60 0.60 0.95 1 100 12 2 25 5 50 -1 -1 -1e9 -1e9 -1 -1 0
+STEP 120 0.38 0.95 1 100 12 2 25 5 50 -1 -1 -1e9 -1e9 -1 -1 0
+STEP 480 0.38 0.95 1 100 12 2 25 5 50 -1 -1 -1e9 -1e9 -1 -1 0
+STEP 540 0.56 0.95 1 100 12 2 25 5 50 -1 -1 -1e9 -1e9 -1 -1 0
+STEP 780 0.56 0.95 1 100 12 2 25 5 50 -1 -1 -1e9 -1e9 -1 -1 0
+
+# Run 2: hard floor forces T3 shed during a real outage even at high SoC
+CFG 1 0 2 0 3 0 3 0 1 0 150 12 1.25
+STEP 0 0.90 0.50 0 500 20 3 25 40 2000 -1 -1 -1e9 -1e9 -1 -1 0
+STEP 60 0.90 0.50 0 500 20 3 25 40 2000 -1 -1 -1e9 -1e9 -1 -1 0
+
+# Run 3: user override defeats the SoC-ladder shed, then times out at 1800s
+CFG 1 0 2 0 3 0 3 0 1 0 150 12 1.25
+STEP 5000 0.30 0.90 1 100 12 1 25 2 10 -1 -1 -1e9 -1e9 2 -1 0
+STEP 5001 0.30 0.90 1 100 12 1 25 2 10 -1 -1 -1e9 -1e9 -1 -1 0
+STEP 6802 0.30 0.90 1 100 12 1 25 2 10 -1 -1 -1e9 -1e9 -1 -1 0
+
+# Run 4: hw-locked channel forced T1 even though configured as T3
+CFG 1 0 2 0 3 1 3 0 1 0 150 12 1.25
+STEP 0 0.10 0.90 1 100 12 1 25 2 10 -1 -1 -1e9 -1e9 -1 -1 0
+STEP 60 0.10 0.90 1 100 12 1 25 2 10 -1 -1 -1e9 -1e9 -1 -1 0
+
+# Run 5: unconfigured -> fail-safe all-T1, nothing sheds even at very low SoC
+CFG 1 0 2 0 3 0 3 0 0 0 150 12 1.25
+STEP 0 0.10 0.90 1 100 12 1 25 2 10 -1 -1 -1e9 -1e9 -1 -1 0
+STEP 60 0.05 0.90 0 500 20 3 25 40 2000 -1 -1 -1e9 -1e9 -1 -1 0
+
+# Run 6: pre-charge boost tightens thresholds +10pp ahead of a forecast outage
+CFG 1 0 2 0 3 0 3 0 1 1 150 12 1.25
+STEP 0 0.55 0.95 1 100 8 4 25 5 50 0.70 0.60 -1e9 -1e9 -1 -1 0
+STEP 60 0.49 0.95 1 100 8 4 25 5 50 -1 -1 -1e9 -1e9 -1 -1 0
+
+# Run 7: forecast disagreement fallback to CONSERVATIVE after 5 minutes
+CFG 1 0 2 0 3 0 3 0 1 0 150 12 1.25
+STEP 0 0.80 0.90 1 100 15 5 25 5 50 -1 -1 3.0 1.0 -1 -1 0
+STEP 60 0.79 0.90 1 100 15 5 25 5 50 -1 -1 3.0 1.0 -1 -1 0
+STEP 120 0.78 0.90 1 100 15 5 25 5 50 -1 -1 3.0 1.0 -1 -1 0
+STEP 180 0.77 0.90 1 100 15 5 25 5 50 -1 -1 3.0 1.0 -1 -1 0
+STEP 240 0.76 0.90 1 100 15 5 25 5 50 -1 -1 3.0 1.0 -1 -1 0
+STEP 300 0.75 0.90 1 100 15 5 25 5 50 -1 -1 3.0 1.0 -1 -1 0

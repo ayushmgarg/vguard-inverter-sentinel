@@ -1,0 +1,55 @@
+{
+  "label": "float (PyTorch)",
+  "n_calib_windows": 1099,
+  "n_calib_batteries": 6,
+  "conformal_offsets": {
+    "c_lo_soh": 0.4140304565429689,
+    "c_hi_soh": 0.0,
+    "c_lo_rul": 0.1641042709350586,
+    "c_hi_rul": 0.0
+  },
+  "soh_mae_pt": 0.5157427191734314,
+  "soh_rmse_pt": 0.6674447655677795,
+  "picp_80": {
+    "before": 0.7488626023657871,
+    "after": 0.8926296633303002,
+    "pice_before_pt": 5.113739763421298,
+    "pice_after_pt": 9.26296633303002,
+    "mpiw_before_pt": 1.7515811920166016,
+    "mpiw_after_pt": 2.1656131744384766
+  },
+  "picp_50_approx": {
+    "after": 0.6478616924476797,
+    "pice_after_pt": 14.786169244767965,
+    "mpiw_after_pt": 1.1397517919540405,
+    "note": "P25/P75 approximated from P10/P50/P90 (Z50/Z80 scaling) -- the architecture's quantile heads are fixed at tau=.1/.5/.9."
+  },
+  "rul_nmpiw": 0.9481968283653259,
+  "rul_relative_error_at_checkpoints": {
+    "95.0": {
+      "mean_rel_err": 0.2214898757015378,
+      "median_rel_err": 0.17960954004390753,
+      "n": 6
+    },
+    "90.0": {
+      "mean_rel_err": 0.17693512594769645,
+      "median_rel_err": 0.16219429871848529,
+      "n": 6
+    },
+    "85.0": {
+      "mean_rel_err": 0.24480639353553157,
+      "median_rel_err": 0.22196378351443205,
+      "n": 6
+    }
+  },
+  "rul_window_hit_rate": 0.8888888888888888,
+  "n_checkpoint_pairs": 18,
+  "warning_lead_time": {
+    "median_lead_weeks": 11.106454643233032,
+    "p10_lead_weeks": 7.645622485783301,
+    "n_batteries": 6,
+    "n_with_replace_grade": 6,
+    "false_alarm_rate": 0.0,
+    "miss_rate": 0.0
+  }
+}

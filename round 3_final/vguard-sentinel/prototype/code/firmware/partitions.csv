@@ -1,0 +1,19 @@
+# V-Guard Sentinel Core (ESP32-S3-WROOM-1-N16R8, 16 MB flash) partition table.
+# Exactly per documentation/prototype/04-Self-Contained-Operation-and-Firmware.md §3.
+# Name,   Type, SubType, Offset,   Size,     Flags
+nvs,      data, nvs,     0x9000,   0x10000,
+otadata,  data, ota,     0x19000,  0x2000,
+app0,     app,  ota_0,   0x20000,  0x300000,
+app1,     app,  ota_1,   0x320000, 0x300000,
+model_a,  data, 0x40,    0x620000, 0x20000,
+model_b,  data, 0x41,    0x640000, 0x20000,
+data,     data, spiffs,  0x660000, 0x100000,
+# ^ subtype "spiffs" is only the partition-table label gen_esp32part.py accepts;
+# this partition is actually mounted as LittleFS (esp_littlefs / joltwallet
+# component, see components list below) -- the subtype byte does not select
+# the filesystem, the mount call does. Holds: feature history (36 B/cycle),
+# NILM events (64 B), PQ events (32 B), telemetry queue, health-log chain.
+coredump, data, coredump,0x760000, 0x10000,
+# Total used: bootloader+pt(64K, implicit before 0x9000) + 64K nvs + 8K otadata
+# + 2x3MB app + 2x128KB model + 1MB data(LittleFS) + 64KB coredump
+# = ~7.5 MB of the 16 MB flash; remainder unpartitioned (headroom / future use).

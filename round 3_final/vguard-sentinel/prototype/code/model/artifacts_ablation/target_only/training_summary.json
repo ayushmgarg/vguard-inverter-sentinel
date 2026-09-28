@@ -1,0 +1,29 @@
+{
+  "stage": "A",
+  "data": "data/features_sim_b.csv",
+  "init": "none",
+  "freeze_conv": false,
+  "l2sp_beta": 0.0,
+  "n_windows_pool": 158,
+  "n_train_pool_batteries": 4,
+  "n_calib_batteries": 2,
+  "n_test_batteries": 2,
+  "seed_results": [
+    {
+      "seed": 0,
+      "best_val_pinball_total": 0.8814340829849243,
+      "init_from": null
+    },
+    {
+      "seed": 1,
+      "best_val_pinball_total": 0.7598966956138611,
+      "init_from": null
+    },
+    {
+      "seed": 2,
+      "best_val_pinball_total": 0.8777962327003479,
+      "init_from": null
+    }
+  ],
+  "wall_seconds": 5.395502090454102
+}

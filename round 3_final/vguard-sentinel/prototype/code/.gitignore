@@ -1,0 +1,5 @@
+# 1 Hz simulator streams are large (100s of MB) and fully regenerable via:
+#   python -m sim.battery_sim --n 8 --out data/sim_1hz/ --seed 0 --cycles 45
+data/sim_1hz/
+__pycache__/
+*.pyc

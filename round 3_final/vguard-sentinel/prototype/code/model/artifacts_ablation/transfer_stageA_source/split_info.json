@@ -1,0 +1,24 @@
+{
+  "stage": "A",
+  "data": "data/features_sim.csv",
+  "init": "none",
+  "n_calib": 1,
+  "n_test": 0,
+  "split_seed": 0,
+  "train_pool_batteries": [
+    0,
+    1,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "calibration_batteries": [
+    2
+  ],
+  "test_batteries": [],
+  "feature_schema_version": 1,
+  "freeze_conv": false,
+  "l2sp_beta": 0.0
+}

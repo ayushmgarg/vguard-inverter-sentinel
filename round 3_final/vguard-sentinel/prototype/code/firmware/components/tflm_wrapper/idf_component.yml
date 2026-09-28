@@ -1,0 +1,16 @@
+# firmware/components/tflm_wrapper/idf_component.yml
+#
+# Declares the esp-tflite-micro dependency for the IDF Component Manager. Only
+# resolved/fetched when this component is actually built, i.e. when
+# CONFIG_SENTINEL_USE_TFLM=y (default n in sdkconfig.defaults -- the int8
+# path actually exercised in this repo is components/sentinel_int8, a
+# hand-written port, not this TFLM path; see README "honest limits").
+#
+# `idf.py build` resolves this automatically the first time
+# CONFIG_SENTINEL_USE_TFLM=y is set and a clean CMake configure runs; it
+# downloads into managed_components/espressif__esp-tflite-micro.
+dependencies:
+  espressif/esp-tflite-micro:
+    version: "^1.3.0"
+  idf:
+    version: ">=5.0"

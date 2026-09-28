@@ -1,0 +1,25 @@
+{
+  "stage": "C",
+  "data": "data/features_sim_b.csv",
+  "init": "model/artifacts_ablation/transfer_stageA_source",
+  "n_calib": 2,
+  "n_test": 2,
+  "split_seed": 0,
+  "train_pool_batteries": [
+    1,
+    2,
+    6,
+    7
+  ],
+  "calibration_batteries": [
+    3,
+    4
+  ],
+  "test_batteries": [
+    0,
+    5
+  ],
+  "feature_schema_version": 1,
+  "freeze_conv": true,
+  "l2sp_beta": 0.001
+}

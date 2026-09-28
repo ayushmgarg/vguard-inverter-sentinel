@@ -1,0 +1,34 @@
+[
+  {
+    "grade": "COLLECTING",
+    "n_weeks": 2,
+    "confidence": "LOW",
+    "soh_p10": 90.0, "soh_p50": 95.0, "soh_p90": 98.0,
+    "rul_weeks_p10": 120, "rul_weeks_p50": 180, "rul_weeks_p90": 250,
+    "replay_banner": null
+  },
+  {
+    "grade": "HEALTHY",
+    "n_weeks": 40,
+    "confidence": "MED",
+    "soh_p10": 88.0, "soh_p50": 93.0, "soh_p90": 97.0,
+    "rul_weeks_p10": 60, "rul_weeks_p50": 90, "rul_weeks_p90": 130,
+    "replay_banner": "Replayed synthetic aging; live battery is at cycle 12 — collecting data."
+  },
+  {
+    "grade": "DEGRADING",
+    "n_weeks": 70,
+    "confidence": "MED",
+    "soh_p10": 78.0, "soh_p50": 83.0, "soh_p90": 88.0,
+    "rul_weeks_p10": 20, "rul_weeks_p50": 30, "rul_weeks_p90": 45,
+    "replay_banner": "Replayed synthetic aging; live battery is at cycle 12 — collecting data."
+  },
+  {
+    "grade": "REPLACE",
+    "n_weeks": 95,
+    "confidence": "HIGH",
+    "soh_p10": 62.0, "soh_p50": 68.0, "soh_p90": 74.0,
+    "rul_weeks_p10": 6, "rul_weeks_p50": 9, "rul_weeks_p90": 14,
+    "replay_banner": "Replayed synthetic aging; live battery is at cycle 12 — collecting data."
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "fold": 0,
+    "n_train": 2879,
+    "n_val": 584,
+    "val_pinball_total": 0.14874860644340515,
+    "seconds": 9.12437891960144,
+    "val_batteries": [
+      "B13",
+      "B14",
+      "B20"
+    ]
+  },
+  {
+    "fold": 1,
+    "n_train": 2882,
+    "n_val": 581,
+    "val_pinball_total": 0.18505756556987762,
+    "seconds": 8.398846864700317,
+    "val_batteries": [
+      "B06",
+      "B09",
+      "B17"
+    ]
+  },
+  {
+    "fold": 2,
+    "n_train": 2890,
+    "n_val": 573,
+    "val_pinball_total": 0.1526341438293457,
+    "seconds": 6.442049503326416,
+    "val_batteries": [
+      "B01",
+      "B03",
+      "B19"
+    ]
+  },
+  {
+    "fold": 3,
+    "n_train": 2884,
+    "n_val": 579,
+    "val_pinball_total": 0.1735459864139557,
+    "seconds": 6.121708154678345,
+    "val_batteries": [
+      "B00",
+      "B16",
+      "B22"
+    ]
+  },
+  {
+    "fold": 4,
+    "n_train": 2893,
+    "n_val": 570,
+    "val_pinball_total": 0.16886039078235626,
+    "seconds": 6.266041040420532,
+    "val_batteries": [
+      "B07",
+      "B08",
+      "B12"
+    ]
+  },
+  {
+    "fold": 5,
+    "n_train": 2887,
+    "n_val": 576,
+    "val_pinball_total": 0.10219559073448181,
+    "seconds": 8.07257890701294,
+    "val_batteries": [
+      "B05",
+      "B15",
+      "B23"
+    ]
+  }
+]

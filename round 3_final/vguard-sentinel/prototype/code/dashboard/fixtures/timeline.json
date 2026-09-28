@@ -1,0 +1,19 @@
+{
+  "soc_baseline": 0.62,
+  "auto_outage_at_s": 20,
+  "soc_drain_rate_per_s_outage": 0.004,
+  "soc_charge_rate_per_s_grid": 0.0006,
+  "soc_max": 0.95,
+  "appliance_event_offsets_s": [30, 50],
+  "replay_auto_start_s": 90,
+  "replay_auto_interval_s": 30,
+  "mcu_reset_hold_s": 15,
+  "t3_shed_soc": 0.40,
+  "t3_restore_soc": 0.55,
+  "t2_shed_soc": 0.55,
+  "t2_restore_soc": 0.70,
+  "battery_usable_wh": 1440,
+  "idle_load_w": 5,
+  "override_default_minutes": 30,
+  "override_max_minutes": 60
+}

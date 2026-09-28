@@ -1,0 +1,7 @@
+[
+  {"name": "Fridge", "kwh_today": 1.8, "confidence": "HIGH"},
+  {"name": "Lights", "kwh_today": 0.4, "confidence": "HIGH"},
+  {"name": "Router", "kwh_today": 0.1, "confidence": "MED"},
+  {"name": "Fan", "kwh_today": 0.0, "confidence": "MED"},
+  {"name": "Iron / Heater", "kwh_today": 0.0, "confidence": "LOW"}
+]

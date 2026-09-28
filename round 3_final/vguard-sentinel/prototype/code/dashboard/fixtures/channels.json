@@ -1,0 +1,6 @@
+[
+  {"name": "Lights & Router", "tier": "T1", "watts": 15},
+  {"name": "Fridge", "tier": "T1", "watts": 90},
+  {"name": "Fan & TV", "tier": "T2", "watts": 60},
+  {"name": "Iron / Heater", "tier": "T3", "watts": 1000}
+]

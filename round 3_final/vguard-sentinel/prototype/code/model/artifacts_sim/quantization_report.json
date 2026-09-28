@@ -1,0 +1,30 @@
+{
+  "n_representative": 250,
+  "float_seed0": {
+    "soh_mae_pt": 8.737699508666992,
+    "picp_80": 0.7936507936507936,
+    "pice_80_pt": 0.6349206349206438,
+    "mpiw_80_pt": 28.56974983215332,
+    "conformal_offsets": {
+      "c_lo_soh": 13.687553405761719,
+      "c_hi_soh": 0.3386878967285156,
+      "c_lo_rul": 0.5279991149902343,
+      "c_hi_rul": 0.0
+    }
+  },
+  "int8_seed0": {
+    "soh_mae_pt": 8.750547741550367,
+    "picp_80": 0.7936507936507936,
+    "pice_80_pt": 0.6349206349206438,
+    "mpiw_80_pt": 28.61168264904674,
+    "conformal_offsets": {
+      "c_lo_soh": 13.831238637759,
+      "c_hi_soh": 0.3471415136742735,
+      "c_lo_rul": 0.5333770053593192,
+      "c_hi_rul": 0.0
+    }
+  },
+  "delta_mae_pt": 0.012848232883374777,
+  "delta_picp_80": 0.0,
+  "target": "design 02 SS5.1: expected SoH MAE +0.1-0.3pt, coverage shift <=2% before re-conformalising"
+}

@@ -1,0 +1,27 @@
+{
+  "n_calib": 3,
+  "split_seed": 0,
+  "train_pool_batteries": [
+    "0_a",
+    "1_a",
+    "2_a",
+    "2_b",
+    "3_a",
+    "4_a",
+    "5_a",
+    "5_b",
+    "7_a",
+    "7_b"
+  ],
+  "calibration_batteries": [
+    "1_b",
+    "4_b",
+    "6_b"
+  ],
+  "test_batteries": [
+    "0_b",
+    "3_b",
+    "6_a"
+  ],
+  "feature_schema_version": 1
+}

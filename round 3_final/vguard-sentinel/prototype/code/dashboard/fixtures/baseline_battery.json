@@ -1,0 +1,9 @@
+{
+  "v_grid_up": 13.4,
+  "v_grid_down": 12.7,
+  "i_charge": 3.2,
+  "t_celsius": 29.5,
+  "r0_mohm": 6.8,
+  "soh_r": 96.5,
+  "raw_offset": 0.025
+}

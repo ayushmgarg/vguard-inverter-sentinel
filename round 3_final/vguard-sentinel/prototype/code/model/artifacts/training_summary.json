@@ -1,0 +1,49 @@
+{
+  "args": {
+    "data": "data/features_sim_dummy.csv",
+    "out": "model/artifacts/",
+    "epochs": 12,
+    "cv_epochs": 4,
+    "seeds": 3,
+    "seed_base": 0,
+    "cv_folds": 6,
+    "n_calib": 6,
+    "val_frac": 0.2,
+    "batch_size": 64,
+    "lr": 0.001,
+    "patience": 5,
+    "lambda_R": 1.0,
+    "lambda_mono": 1.0,
+    "lambda_cross": 1.0,
+    "no_cv": false,
+    "loco": true
+  },
+  "n_windows_total": 4562,
+  "n_windows_pool": 3463,
+  "n_calib_batteries": 6,
+  "n_train_pool_batteries": 18,
+  "param_count": 27990,
+  "mac_count": 105600,
+  "seed_results": [
+    {
+      "seed": 0,
+      "best_val_pinball_total": 0.09260331094264984,
+      "n_epochs_run": 11
+    },
+    {
+      "seed": 1,
+      "best_val_pinball_total": 0.10412953794002533,
+      "n_epochs_run": 12
+    },
+    {
+      "seed": 2,
+      "best_val_pinball_total": 0.09466879069805145,
+      "n_epochs_run": 12
+    }
+  ],
+  "cv_summary": {
+    "n_folds": 6,
+    "mean_val_pinball_total": 0.15517371396223703
+  },
+  "wall_seconds": 129.54988265037537
+}
